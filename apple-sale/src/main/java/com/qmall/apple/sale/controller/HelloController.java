@@ -1,21 +1,20 @@
-package com.qmall.apple.manager.controller;
+package com.qmall.apple.sale.controller;
 
+import com.qmall.apple.bean.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author: zhouR
- * @date: Create in 2019/12/10 - 11:59
+ * @date: Create in 2019/12/10 - 12:47
  * @function:
  */
 @Controller
 public class HelloController {
 
 	@RequestMapping("/hello")
-	@ResponseBody
 	public String hello(){
+		User user = new User();
 		return "success!";
 	}
-
 }
