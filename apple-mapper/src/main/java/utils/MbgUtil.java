@@ -16,16 +16,16 @@ import java.util.List;
  */
 public class MbgUtil {
 	public static void main(String[] args) throws Exception {
-
-		List<String> warnings = new ArrayList<>();
+		System.out.println("start...");
+		/*List<String> warnings = new ArrayList<>();
 		boolean overwrite = true;
 		File configFile = new File("mbg.xml");
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 		MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-		myBatisGenerator.generate(null);
-		System.out.println("run success");
+		myBatisGenerator.generate(null);*/
+		System.out.println("end...");
 
 
 

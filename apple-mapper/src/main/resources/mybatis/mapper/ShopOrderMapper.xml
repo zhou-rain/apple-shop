@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qmall.apple.dao.ShopOrderMapper">
+  <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="addressId" jdbcType="INTEGER" property="addressid" />
+    <result column="ostatus" jdbcType="INTEGER" property="ostatus" />
+    <result column="odate" jdbcType="TIMESTAMP" property="odate" />
+    <result column="ototal" jdbcType="REAL" property="ototal" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, aid, addressId, ostatus, odate, ototal, isdelete
+  </sql>
+  <select id="selectByExample" parameterType="com.qmall.apple.bean.ShopOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop_order
+    where oid = #{oid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shop_order
+    where oid = #{oid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qmall.apple.bean.ShopOrderExample">
+    delete from shop_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qmall.apple.bean.ShopOrder">
+    insert into shop_order (oid, aid, addressId, 
+      ostatus, odate, ototal, 
+      isdelete)
+    values (#{oid,jdbcType=VARCHAR}, #{aid,jdbcType=INTEGER}, #{addressid,jdbcType=INTEGER}, 
+      #{ostatus,jdbcType=INTEGER}, #{odate,jdbcType=TIMESTAMP}, #{ototal,jdbcType=REAL}, 
+      #{isdelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qmall.apple.bean.ShopOrder">
+    insert into shop_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="addressid != null">
+        addressId,
+      </if>
+      <if test="ostatus != null">
+        ostatus,
+      </if>
+      <if test="odate != null">
+        odate,
+      </if>
+      <if test="ototal != null">
+        ototal,
+      </if>
+      <if test="isdelete != null">
+        isdelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="addressid != null">
+        #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null">
+        #{ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="odate != null">
+        #{odate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ototal != null">
+        #{ototal,jdbcType=REAL},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qmall.apple.bean.ShopOrderExample" resultType="java.lang.Long">
+    select count(*) from shop_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update shop_order
+    <set>
+      <if test="record.oid != null">
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aid != null">
+        aid = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.addressid != null">
+        addressId = #{record.addressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ostatus != null">
+        ostatus = #{record.ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.odate != null">
+        odate = #{record.odate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ototal != null">
+        ototal = #{record.ototal,jdbcType=REAL},
+      </if>
+      <if test="record.isdelete != null">
+        isdelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update shop_order
+    set oid = #{record.oid,jdbcType=VARCHAR},
+      aid = #{record.aid,jdbcType=INTEGER},
+      addressId = #{record.addressid,jdbcType=INTEGER},
+      ostatus = #{record.ostatus,jdbcType=INTEGER},
+      odate = #{record.odate,jdbcType=TIMESTAMP},
+      ototal = #{record.ototal,jdbcType=REAL},
+      isdelete = #{record.isdelete,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qmall.apple.bean.ShopOrder">
+    update shop_order
+    <set>
+      <if test="aid != null">
+        aid = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="addressid != null">
+        addressId = #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="ostatus != null">
+        ostatus = #{ostatus,jdbcType=INTEGER},
+      </if>
+      <if test="odate != null">
+        odate = #{odate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ototal != null">
+        ototal = #{ototal,jdbcType=REAL},
+      </if>
+      <if test="isdelete != null">
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qmall.apple.bean.ShopOrder">
+    update shop_order
+    set aid = #{aid,jdbcType=INTEGER},
+      addressId = #{addressid,jdbcType=INTEGER},
+      ostatus = #{ostatus,jdbcType=INTEGER},
+      odate = #{odate,jdbcType=TIMESTAMP},
+      ototal = #{ototal,jdbcType=REAL},
+      isdelete = #{isdelete,jdbcType=INTEGER}
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+</mapper>
