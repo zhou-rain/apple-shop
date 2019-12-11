@@ -8,7 +8,7 @@ package Constants;
 public class Admin {
 
 	//用户登录标志
-	public static final String loginUser = "loginUser";
+	public static final String loginAdmin = "loginAdmin";
 
 
 }

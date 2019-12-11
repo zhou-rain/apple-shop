@@ -3,6 +3,7 @@ package com.qmall.apple.manager.service.impl;
 import com.qmall.apple.Entity.ShopAdminEntity;
 import com.qmall.apple.bean.ShopAdmin;
 import com.qmall.apple.bean.ShopAdminExample;
+import com.qmall.apple.commons.WebUtil;
 import com.qmall.apple.dao.ShopAdminMapper;
 import com.qmall.apple.manager.service.ShopAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +23,15 @@ public class ShopAdminServiceImpl implements ShopAdminService {
 	ShopAdminMapper shopAdminMapper;
 
 	@Override
-	public ShopAdminEntity login(ShopAdminEntity shopAdmin) {
+	public ShopAdmin login(ShopAdminEntity shopAdmin) {
 
 		ShopAdminExample example = new ShopAdminExample();
 		ShopAdminExample.Criteria criteria = example.createCriteria();
 		criteria.andApassEqualTo(shopAdmin.getApass());
 		criteria.andAacountEqualTo(shopAdmin.getAacount());
 
-
 		List<ShopAdmin> shopAdmins = shopAdminMapper.selectByExample(example);
 
-		for (ShopAdmin admin : shopAdmins) {
-			System.out.println("admin = " + admin);
-		}
-
-		return null;
+		return shopAdmins.isEmpty()?null:shopAdmins.get(0);
 	}
 }

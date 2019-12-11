@@ -1,6 +1,7 @@
 package com.qmall.apple.manager.service;
 
 import com.qmall.apple.Entity.ShopAdminEntity;
+import com.qmall.apple.bean.ShopAdmin;
 
 /**
  * @author: zhouR
@@ -9,6 +10,6 @@ import com.qmall.apple.Entity.ShopAdminEntity;
  */
 public interface ShopAdminService {
 
-	ShopAdminEntity login(ShopAdminEntity shopAdmin);
+	ShopAdmin login(ShopAdminEntity shopAdmin);
 
 }
