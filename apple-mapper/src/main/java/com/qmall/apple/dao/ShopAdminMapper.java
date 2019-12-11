@@ -1,5 +1,6 @@
 package com.qmall.apple.dao;
 
+import com.qmall.apple.Entity.ShopAdminEntity;
 import com.qmall.apple.bean.ShopAdmin;
 import com.qmall.apple.bean.ShopAdminExample;
 import org.apache.ibatis.annotations.Param;
@@ -17,9 +18,9 @@ public interface ShopAdminMapper {
 
     int insertSelective(ShopAdmin record);
 
-    List<ShopAdmin> selectByExample(ShopAdminExample example);
+    List<ShopAdminEntity> selectByExample(ShopAdminExample example);
 
-    ShopAdmin selectByPrimaryKey(Integer aid);
+	ShopAdminEntity selectByPrimaryKey(Integer aid);
 
     int updateByExampleSelective(@Param("record") ShopAdmin record, @Param("example") ShopAdminExample example);
 

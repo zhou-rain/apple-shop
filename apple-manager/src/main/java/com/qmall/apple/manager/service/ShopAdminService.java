@@ -3,6 +3,9 @@ package com.qmall.apple.manager.service;
 import com.qmall.apple.Entity.ShopAdminEntity;
 import com.qmall.apple.bean.ShopAdmin;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author: zhouR
  * @date: Create in 2019/12/10 - 16:56
@@ -10,6 +13,7 @@ import com.qmall.apple.bean.ShopAdmin;
  */
 public interface ShopAdminService {
 
-	ShopAdmin login(ShopAdminEntity shopAdmin);
+	ShopAdminEntity login(ShopAdmin shopAdmin);
 
+	List<ShopAdminEntity> list(Map<String,Object> param);
 }

@@ -1,0 +1,14 @@
+/*改变按钮样式*/
+input[type='checkbox']{
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    -webkit-appearance:none;
+    outline:none;
+    border: 1px solid #c9c9c9;
+    border-radius: 2px;
+}
+input[type='checkbox']:checked{
+    background: url("../images/checked.png")no-repeat center;
+    background-size: 1.2rem;
+}

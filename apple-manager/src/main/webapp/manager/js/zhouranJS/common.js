@@ -58,5 +58,23 @@ function StringToJson(str) {
 }
 
 
+//将表单序列化成json对象
+$.fn.serializeObject = function() {
+    let o = {};
+    let a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [ o[this.name] ];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+
 
 

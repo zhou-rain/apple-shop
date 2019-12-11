@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qmall.apple.dao.ShopAdminMapper">
-  <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopAdmin">
+
+    <!--这里入参全是bean类，  返回值全是entity类-->
+  <resultMap id="BaseResultMap" type="com.qmall.apple.Entity.ShopAdminEntity">
     <id column="aid" jdbcType="INTEGER" property="aid" />
     <result column="aname" jdbcType="VARCHAR" property="aname" />
     <result column="aacount" jdbcType="VARCHAR" property="aacount" />

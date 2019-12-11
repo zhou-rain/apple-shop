@@ -10,15 +10,15 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="admin/css/font.css">
-    <link rel="stylesheet" href="admin/css/xadmin.css">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/xadmin.css">
 
 
 </head>
 <body class="login-bg">
 
 <div class="login layui-anim layui-anim-up">
-    <div class="message">x-admin2.0-管理登录</div>
+    <div class="message">所街后台管理系统</div>
     <div id="darkbannerwrap"></div>
 
     <form method="post" class="layui-form">
@@ -31,12 +31,12 @@
     </form>
 </div>
 
-<script type="text/javascript" src="admin/js/jquery-1.12.4.js"></script>
-<script charset="utf-8" src="admin/lib/layui/layui.js"></script>
-<script type="text/javascript" src="admin/js/xadmin.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script charset="utf-8" src="lib/layui/layui.js"></script>
+<script type="text/javascript" src="js/xadmin.js"></script>
 
-<script type="text/javascript" src="admin/js/zhouranJS/common.js"></script>
-<script type="text/javascript" src="admin/js/zhouranJS/ajax.js"></script>
+<script type="text/javascript" src="js/zhouranJS/common.js"></script>
+<script type="text/javascript" src="js/zhouranJS/ajax.js"></script>
 
 <script>
 
@@ -57,7 +57,7 @@
             let loginAdmin = result.extend.loginAdmin;
             let jsonStr = JsonToString(loginAdmin);
             sessionStorage.setItem(loginAdmin.aid,jsonStr);
-            window.location.href = "admin/index.html?userId="+loginAdmin.aid;
+            window.location.href = "index.html?userId="+loginAdmin.aid;
         }
 
     }

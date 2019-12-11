@@ -1,6 +1,6 @@
 let queryUrl;//列表url
 let queryParam = {};//搜索条件
-let pageSize = 5;//页面尺寸
+let pageSize = 8;//页面尺寸
 let pageNum;//当前页码
 
 
@@ -12,26 +12,26 @@ $(function () {
 
 //初始化搜索条件
 function prepParam() {
-    let keyword = $(".hd .keyword").val();
+    queryParam = $("#search_form").serializeObject();
     queryParam.pageSize = pageSize;
-    queryParam.keyword = keyword;
 }
 
 //带条件翻页
 function toPage(pageNum) {
-    prepParam();//初始化搜索条件
+    prepParam();
     queryParam.pageNum = pageNum;
     getJSON(queryUrl, queryParam, callback_toPage)
 }
 
 function callback_toPage(result) {
     console.log(result);
-    $(".tablebd tbody").empty();
-    $("#page").empty();
+    $(".layui-table tbody").empty();
+    $(".page").empty();
     $(check_all_box).prop("checked", false);
 
-    let pageInfo = result.extend.list;
+    let pageInfo = result.extend.pageInfo;
     pageNum = pageInfo.pageNum;
+    $("#total").text(pageInfo.total);
 
     //构建表格体
     if (pageInfo.list != null) {
@@ -50,19 +50,34 @@ function callback_toPage(result) {
 
 
 //构建底部导航条
-function initTFoot(pageInfo) {
-    $("#page").paging({
-        pageNum: pageInfo.pageNum, // 当前页面
-        totalNum: pageInfo.pages, // 总页码
-        totalList: pageInfo.total, // 记录总数量
-        callback: function (result) { //返回点击导航条的数字
-            toPage(result);
+function initTFoot(pageinfo) {
+    let str = '';
+    if(pageinfo.hasPreviousPage === false){
+        str += "<a class='disabled'>首页</a>";
+        str += "<a class='disabled'>&lt;&lt;</a>";
+    }else {
+        str += "<a class='prev' href='javascript:;' onclick='toPage(1)'>首页</a>";
+        str += "<a class='prev' href='javascript:;' onclick='toPage("+pageinfo.prePage+")'>&lt;&lt;</a>";
+    }
+    $.each(pageinfo.navigatepageNums,function (index,obj) {
+        if(obj === pageinfo.pageNum){
+            str += "<span class='current'>"+obj+"</span>";
+        }else {
+            str += "<a class='num' href='javascript:;' onclick='toPage("+obj+")' >"+obj+"</a>";
         }
     });
+    if(pageinfo.hasNextPage === false){
+        str += "<a class='disabled'>&gt;&gt;</a>";
+        str += "<a class='disabled'>末页</a>";
+    }else {
+        str += "<a class='next' href='javascript:;' onclick='toPage("+pageinfo.nextPage+")'>&gt;&gt;</a>";
+        str += "<a class='next' href='javascript:;' onclick='toPage("+pageinfo.pages+")'>末页</a>";
+    }
+    $(".page").append(str);
 }
 
 //搜索按钮class或者id
-let search_btn = ".hd .search";
+let search_btn = "#sreach_btn";
 //点击搜索
 $(search_btn).click(function () {
     toPage(1);
@@ -70,7 +85,11 @@ $(search_btn).click(function () {
 
 
 
-let check_all_box = "#all";//全选按钮的id
+
+
+
+
+let check_all_box = "#check_all_box";//全选按钮的id
 let check_each_box = ".check_each";    //每一项的小checkbox
 
 // 全选按钮的控制
@@ -88,22 +107,23 @@ $(document).on("click", check_each_box, function () {
 });
 
 
+
+
+
+
 /* ****************删除********************* */
 let delete_all_btn = "#delete_all_btn"; //批量删除按钮
-let delete_each_btn = ".delete_each_btn"; //单个删除的按钮
 //删除按钮和checkbox设置data-id
 
 
 let delurl; //删除地址（每个页面自己重新赋值即可）
 let delparam = {};//要删除的参数
-//记得定义删除后的回调函数  function callback_delete(result){}
 
 
 //单个删除
-$(document).on("click", delete_each_btn, function () {
-    let dataId = $(this).data("id");
-    deleteByIds(dataId);
-});
+function member_del(obj,id){
+    deleteByIds(id);
+}
 
 //批量删除方法
 $(document).on("click", delete_all_btn, function () {
@@ -115,7 +135,7 @@ $(document).on("click", delete_all_btn, function () {
 //获取被选中的ID
 function getSelectedIds() {
     let dataIds = "";
-    $(delete_each_btn).filter(":checked").each(function () {
+    $(check_each_box).filter(":checked").each(function () {
         dataIds += $(this).data("id") + ",";
     });
     return dataIds;
@@ -124,14 +144,35 @@ function getSelectedIds() {
 // 传入id批量删除
 function deleteByIds(dataIds) {
     if (dataIds === "" || dataIds === null) {
-        alert("请选择要删除的按钮");
+        layer.msg('请选择要删除的按钮',{icon:7,time:1000});
         return;
     }
-    if (confirm("确认删除吗?")) {
+
+    layer.confirm('确认要删除吗？',function(){
         delparam.ids = dataIds;
         getJSON(delurl, delparam, callback_delete);
+    });
+}
+
+function callback_delete(result) {
+    let ret = result.extend.ret;
+    if(ret=="ok"){
+        layer.msg('已删除!',{icon:1,time:1000});
+        toPage(1);
+    }else{
+        layer.msg('系统出错，请刷新或联系管理员!',{icon:2,time:1000});
     }
 }
 
 
+
+/*
+1绿色勾
+2红色叉叉
+3黄色问号
+4灰色锁
+5红色哭脸
+6绿色笑脸
+7黄色感叹号
+ */
 

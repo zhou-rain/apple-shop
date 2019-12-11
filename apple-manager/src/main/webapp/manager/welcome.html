@@ -9,11 +9,12 @@
         <link rel="stylesheet" href="./css/font.css">
         <link rel="stylesheet" href="./css/xadmin.css">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
     </head>
     <body>
     <div class="x-body layui-anim layui-anim-up">
         <blockquote class="layui-elem-quote">欢迎管理员：
-            <span class="x-red" id="welcom_user_name">test</span>！当前时间:2018-04-25 20:50:53</blockquote>
+            <span class="x-red" id="welcom_user_name"></span>！当前时间:<span id="welcom_time">2018-04-25 20:50:53</span></blockquote>
         <fieldset class="layui-elem-field">
             <legend>数据统计</legend>
             <div class="layui-field-box">
@@ -168,6 +169,7 @@
 
 
     <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+    <script src="lib/laydate/laydate.js"></script>
     <script type="text/javascript" src="js/zhouranJS/common.js"></script>
     <script>
         $(function () {
@@ -176,7 +178,18 @@
             //用户名
             $("#welcom_user_name").text(userJSON.aname);
 
+
         });
+
+
+        setInterval(function () {
+            let today=new Date();
+            let s=today.getFullYear()+"年"+(today.getMonth()+1)+"月"+today.getDate()+"日\t"+
+                today.getHours()+"时"+today.getMinutes()+"分"+today.getSeconds()+"秒"+"\t星期"+today.getDay();
+            $("#welcom_time").text(s);
+        },1000);
+
+
 
     </script>
 

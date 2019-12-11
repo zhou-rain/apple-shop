@@ -20,6 +20,10 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	-->
+
+    <!--让资源文件不经过 DispatcherServlet-->
+    <mvc:resources mapping="/manager/**" location="/manager/" />
+
 	
 	<!--两个标准配置  -->
 	<!-- 映射静态请求,将springmvc不能处理的请求交给tomcat -->

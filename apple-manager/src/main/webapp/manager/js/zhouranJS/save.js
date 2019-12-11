@@ -24,8 +24,8 @@ function save(form) {
 
 //将表单序列化成json对象
 $.fn.serializeObject = function() {
-    var o = {};
-    var a = this.serializeArray();
+    let o = {};
+    let a = this.serializeArray();
     $.each(a, function() {
         if (o[this.name]) {
             if (!o[this.name].push) {
@@ -37,4 +37,4 @@ $.fn.serializeObject = function() {
         }
     });
     return o;
-}
+};
