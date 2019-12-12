@@ -17,7 +17,6 @@ function save(form) {
         //没有fileinput框
         let formJson = form.serializeObject()
         let result = Object.assign(saveParam, formJson);
-        console.log(result);
         getJSON(saveUrl,result,callback_save);
     }
 }

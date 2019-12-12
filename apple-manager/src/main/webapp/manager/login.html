@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>后台登录-X-admin2.0</title>
+    <title>所街后台管理系统</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -53,10 +53,17 @@
         if (result.code === 200) {
             layer.msg(result.extend.msg);
         } else {
-            //将用户放入sessionStorage
+
             let loginAdmin = result.extend.loginAdmin;
+
+            //将用户放入sessionStorage
             let jsonStr = JsonToString(loginAdmin);
+            //加密： window.encodeURIComponent(window.btoa(str));
+            //解密： window.decodeURIComponent(window.atob(str));
+            jsonStr = window.encodeURIComponent(jsonStr);
             sessionStorage.setItem(loginAdmin.aid,jsonStr);
+            sessionStorage.setItem("token",result.extend.token);
+            sessionStorage.setItem("userId",loginAdmin.aid);
             window.location.href = "index.html?userId="+loginAdmin.aid;
         }
 

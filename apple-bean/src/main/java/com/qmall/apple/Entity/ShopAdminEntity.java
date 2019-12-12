@@ -1,6 +1,12 @@
 package com.qmall.apple.Entity;
 
-public class ShopAdminEntity {
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 管理员实体类
+ */
+public class ShopAdminEntity implements Serializable {
     private Integer aid;
 
     private String aname;
@@ -13,7 +19,39 @@ public class ShopAdminEntity {
 
     private String aphone;
 
-    public Integer getAid() {
+    /*自己的业务*/
+    private String token;
+    private String ipaddr;
+
+	private List<ShopRoleEntity> roles; //一个用户下面所有的角色信息
+
+
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getIpaddr() {
+		return ipaddr;
+	}
+
+	public void setIpaddr(String ipaddr) {
+		this.ipaddr = ipaddr;
+	}
+
+	public List<ShopRoleEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<ShopRoleEntity> roles) {
+		this.roles = roles;
+	}
+
+	public Integer getAid() {
         return aid;
     }
 

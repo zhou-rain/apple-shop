@@ -1,6 +1,11 @@
 package com.qmall.apple.Entity;
 
-public class ShopAuthEntity {
+import java.io.Serializable;
+
+/**
+ * 具体的权限
+ */
+public class ShopAuthEntity implements Serializable {
     private Integer auid;
 
     private String auname;

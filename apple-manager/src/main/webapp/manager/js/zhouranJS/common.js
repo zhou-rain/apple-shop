@@ -2,6 +2,13 @@
  * 通用工具类
  *
  */
+function getUserId(){
+    return sessionStorage.getItem("userId");
+}
+
+function getToken(){
+    return sessionStorage.getItem("token");
+}
 
 
 
@@ -37,13 +44,18 @@ function getParentUrlParam(name){
  */
 function getUserFromSessionByUserId(userId) {
     let userInfo = sessionStorage.getItem(userId);
+    //加密： window.encodeURIComponent(window.btoa(str));
+    //解密： window.decodeURIComponent(window.atob(str));
+    userInfo = window.decodeURIComponent(userInfo);
     return JSON.parse(userInfo);
 }
 
 
 
 
+
 /**
+ * 将Json格式变成String字符串
  * @return {string}
  */
 function JsonToString(json) {
@@ -51,6 +63,7 @@ function JsonToString(json) {
 }
 
 /**
+ * 将String字符串变成json格式
  * @return {json}
  */
 function StringToJson(str) {
@@ -74,6 +87,7 @@ $.fn.serializeObject = function() {
     });
     return o;
 };
+
 
 
 

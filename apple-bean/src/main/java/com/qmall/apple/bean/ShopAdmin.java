@@ -13,7 +13,17 @@ public class ShopAdmin {
 
     private String aphone;
 
-    public Integer getAid() {
+	private boolean islogin = false; //当前用户是否登录
+
+	public boolean isIslogin() {
+		return islogin;
+	}
+
+	public void setIslogin(boolean islogin) {
+		this.islogin = islogin;
+	}
+
+	public Integer getAid() {
         return aid;
     }
 

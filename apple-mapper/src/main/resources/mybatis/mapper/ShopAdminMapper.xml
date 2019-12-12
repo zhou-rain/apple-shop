@@ -3,6 +3,67 @@
 <mapper namespace="com.qmall.apple.dao.ShopAdminMapper">
 
     <!--这里入参全是bean类，  返回值全是entity类-->
+
+
+    <!-- 查询管理员  带上用户和角色-->
+    <select id="selectByExample_With_Role_Auth" parameterType="com.qmall.apple.bean.ShopAdminExample" resultMap="BaseResultMap_With_Role_Auth">
+        SELECT admin.`aid`,admin.`aname`,admin.`aacount`,admin.`apass`,admin.`astatus`,admin.`aphone`,
+        sar.`rid`,
+        sr.`rname`,sr.`rdesc`,
+        sra.`auid`,
+        sa.`auid`,sa.`auname`,sa.`aupath`,sa.`autype`,sa.`aupid`
+        FROM `shop_admin` admin
+        LEFT JOIN `shop_admin_role` sar ON sar.`aid` = admin.`aid`
+        LEFT JOIN `shop_role` sr ON sr.`rid` = sar.`rid`
+        LEFT JOIN `shop_role_auth` sra ON sra.`rid` = sr.`rid`
+        LEFT JOIN `shop_auth`  sa ON  sa.`auid` = sra.`auid`
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+
+
+    <resultMap id="BaseResultMap_With_Role_Auth" type="com.qmall.apple.Entity.ShopAdminEntity">
+        <id column="aid" jdbcType="INTEGER" property="aid" />
+        <result column="aname" jdbcType="VARCHAR" property="aname" />
+        <result column="aacount" jdbcType="VARCHAR" property="aacount" />
+        <result column="apass" jdbcType="VARCHAR" property="apass" />
+        <result column="astatus" jdbcType="SMALLINT" property="astatus" />
+        <result column="aphone" jdbcType="VARCHAR" property="aphone" />
+
+        <collection property="roles" ofType="com.qmall.apple.Entity.ShopRoleEntity">
+            <id column="rid" jdbcType="INTEGER" property="rid" />
+            <result column="rname" jdbcType="VARCHAR" property="rname" />
+            <result column="rdesc" jdbcType="VARCHAR" property="rdesc" />
+            
+            <collection property="auths" ofType="com.qmall.apple.Entity.ShopAuthEntity">
+                <id column="auid" jdbcType="INTEGER" property="auid" />
+                <result column="auname" jdbcType="VARCHAR" property="auname" />
+                <result column="aupath" jdbcType="VARCHAR" property="aupath" />
+                <result column="autype" jdbcType="SMALLINT" property="autype" />
+                <result column="aupid" jdbcType="INTEGER" property="aupid" />
+            </collection>
+
+        </collection>
+
+    </resultMap>
+
+
+
+
+  <resultMap id="BaseResultMap_Bean" type="com.qmall.apple.bean.ShopAdmin">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="aname" jdbcType="VARCHAR" property="aname" />
+    <result column="aacount" jdbcType="VARCHAR" property="aacount" />
+    <result column="apass" jdbcType="VARCHAR" property="apass" />
+    <result column="astatus" jdbcType="SMALLINT" property="astatus" />
+    <result column="aphone" jdbcType="VARCHAR" property="aphone" />
+  </resultMap>
+
   <resultMap id="BaseResultMap" type="com.qmall.apple.Entity.ShopAdminEntity">
     <id column="aid" jdbcType="INTEGER" property="aid" />
     <result column="aname" jdbcType="VARCHAR" property="aname" />
@@ -88,6 +149,12 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
+    <include refid="Base_Column_List" />
+    from shop_admin
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey_ReturnBean" parameterType="java.lang.Integer" resultMap="BaseResultMap_Bean">
+    select
     <include refid="Base_Column_List" />
     from shop_admin
     where aid = #{aid,jdbcType=INTEGER}

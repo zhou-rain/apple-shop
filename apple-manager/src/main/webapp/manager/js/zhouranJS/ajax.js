@@ -1,19 +1,24 @@
 /*
  *ajax参数
+ *
  * */
-//var token = token;
-//var userId = "";
+let userId = getUserId();
+let token = getToken();
+
 let ajaxData ={
-	 //管理员登录验证
+    //删除管理员
 	 data101:{
-    },
-    data102:{
-    },
-    data103:{
-    },
-    data104:{
-    },
-    data105:{
+	     "userId":userId,//每次请求都需要带上用户ID
+         "token":token,//每次请求必须带上令牌
+         "status":"" //用户状态
+     },
+     data102:{
+     },
+     data103:{
+     },
+     data104:{
+     },
+     data105:{
 
     }
 

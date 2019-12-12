@@ -10,17 +10,15 @@ $(function () {
     toPage(1);
 });
 
-//初始化搜索条件
-function prepParam() {
-    queryParam = $("#search_form").serializeObject();
-    queryParam.pageSize = pageSize;
-}
-
+//<搜索框>
+let search_form = $("#search_form");
 //带条件翻页
 function toPage(pageNum) {
-    prepParam();
+    queryParam.pageSize = pageSize;
     queryParam.pageNum = pageNum;
-    getJSON(queryUrl, queryParam, callback_toPage)
+    let search_form_param = search_form.serializeObject();//拼接查询条件
+    let result = Object.assign(queryParam, search_form_param);
+    getJSON(queryUrl, result, callback_toPage)
 }
 
 function callback_toPage(result) {
@@ -76,10 +74,8 @@ function initTFoot(pageinfo) {
     $(".page").append(str);
 }
 
-//搜索按钮class或者id
-let search_btn = "#sreach_btn";
 //点击搜索
-$(search_btn).click(function () {
+$("#sreach_btn").click(function () {
     toPage(1);
 });
 
@@ -89,8 +85,8 @@ $(search_btn).click(function () {
 
 
 
-let check_all_box = "#check_all_box";//全选按钮的id
-let check_each_box = ".check_each";    //每一项的小checkbox
+let check_all_box = "#check_all_box";//<<全选按钮的>>
+let check_each_box = ".check_each";    //<<每一项的小checkbox>>
 
 // 全选按钮的控制
 $(document).on("click", check_all_box, function () {
@@ -112,11 +108,9 @@ $(document).on("click", check_each_box, function () {
 
 
 /* ****************删除********************* */
-let delete_all_btn = "#delete_all_btn"; //批量删除按钮
 //删除按钮和checkbox设置data-id
-
-
-let delurl; //删除地址（每个页面自己重新赋值即可）
+let delete_all_btn = "#delete_all_btn"; //<<批量删除按钮>>
+let delurl; //删除地址
 let delparam = {};//要删除的参数
 
 

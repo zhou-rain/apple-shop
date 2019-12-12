@@ -293,7 +293,6 @@
             //将用户信息放在页面上
             let userId = getUrlParam("userId");
             let userJSON = getUserFromSessionByUserId(userId);
-
             //用户名
             $(".container:first .right a:eq(0)").text(userJSON.aname)
         })

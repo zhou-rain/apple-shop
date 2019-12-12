@@ -1,6 +1,8 @@
 package com.qmall.apple.commons;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.UUID;
 
 public class WebUtil {
 	
@@ -53,4 +55,71 @@ public class WebUtil {
 		return Integer.parseInt(obj.toString());
 	}
 
+	/**
+	 * 获取登录用户的IP地址
+	 *
+	 * @param request
+	 * @return
+	 */
+	public static String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		if ("0:0:0:0:0:0:0:1".equals(ip)) {
+			ip = "127.0.0.1";
+		}
+		if (ip.split(",").length > 1) {
+			ip = ip.split(",")[0];
+		}
+		return ip;
+	}
+
+
+
+
+	/**
+	 * 每次登陆都给用户分配一个token
+	 * 获取用户ip地址
+	 *
+	 * 拼上当前时间戳
+	 * MD5加密后返回字符串
+	 *
+	 * 以后每次ajax访问都带上token和用户id，通过拦截器进行验证
+	 * @return token
+	 */
+	public static String getToken(String ipaddr,Integer userId){
+
+		StringBuffer token = new StringBuffer();
+		String uuid = UUID.randomUUID().toString().replaceAll(" ","").replaceAll("-","");
+		token.append(uuid, 0, 8);//截取uuid前8位
+
+		String digest = MD5Util.digest(ipaddr + userId);
+		token.append(digest);
+		return token.toString();
+	}
+
+
+	/**
+	 * 检测token是否合法
+	 *
+	 * @param userId
+	 * @return
+	 */
+	public static boolean checkToken(String token,String ipaddr,Integer userId){
+		token = token.substring(8,token.length());
+		String digest = MD5Util.digest(ipaddr + userId);
+		return digest.equals(token);
+	}
+
+
 }
+
+
+
