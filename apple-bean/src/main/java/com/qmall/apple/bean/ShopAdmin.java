@@ -1,5 +1,8 @@
 package com.qmall.apple.bean;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ShopAdmin {
     private Integer aid;
 
@@ -14,6 +17,36 @@ public class ShopAdmin {
     private String aphone;
 
 	private boolean islogin = false; //当前用户是否登录
+
+	/*自己的业务*/
+	private String token;
+	private String ipaddr;
+	private List<Integer> roleIds;
+
+
+	public List<Integer> getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(List<Integer> roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getIpaddr() {
+		return ipaddr;
+	}
+
+	public void setIpaddr(String ipaddr) {
+		this.ipaddr = ipaddr;
+	}
 
 	public boolean isIslogin() {
 		return islogin;
@@ -70,4 +103,20 @@ public class ShopAdmin {
     public void setAphone(String aphone) {
         this.aphone = aphone == null ? null : aphone.trim();
     }
+
+	@Override
+	public String toString() {
+		return "ShopAdmin{" +
+				"aid=" + aid +
+				", aname='" + aname + '\'' +
+				", aacount='" + aacount + '\'' +
+				", apass='" + apass + '\'' +
+				", astatus=" + astatus +
+				", aphone='" + aphone + '\'' +
+				", islogin=" + islogin +
+				", token='" + token + '\'' +
+				", ipaddr='" + ipaddr + '\'' +
+				", roleIds=" + roleIds +
+				'}';
+	}
 }

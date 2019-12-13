@@ -22,4 +22,13 @@ public interface ShopAdminService {
 
 	//修改用户状态
 	String changeStatus(int userId, String status);
+
+	//根据id获取用户
+	ShopAdminEntity getEntityById(Integer aid);
+
+	//根据id获取用户
+	ShopAdmin getBeanById(Integer aid);
+
+
+	String save(ShopAdmin bean, String[] roleIds);
 }

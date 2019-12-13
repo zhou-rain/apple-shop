@@ -25,6 +25,22 @@
         </if>
     </select>
 
+    <!-- 查询管理员  带上用户和角色-->
+    <select id="selectPrimaryKey_With_Role_Auth" parameterType="com.qmall.apple.bean.ShopAdminExample" resultMap="BaseResultMap_With_Role_Auth">
+        SELECT admin.`aid`,admin.`aname`,admin.`aacount`,admin.`apass`,admin.`astatus`,admin.`aphone`,
+        sar.`rid`,
+        sr.`rname`,sr.`rdesc`,
+        sra.`auid`,
+        sa.`auid`,sa.`auname`,sa.`aupath`,sa.`autype`,sa.`aupid`
+        FROM `shop_admin` admin
+        LEFT JOIN `shop_admin_role` sar ON sar.`aid` = admin.`aid`
+        LEFT JOIN `shop_role` sr ON sr.`rid` = sar.`rid`
+        LEFT JOIN `shop_role_auth` sra ON sra.`rid` = sr.`rid`
+        LEFT JOIN `shop_auth`  sa ON  sa.`auid` = sra.`auid`
+       where admin.aid = #{aid}
+
+    </select>
+
 
 
     <resultMap id="BaseResultMap_With_Role_Auth" type="com.qmall.apple.Entity.ShopAdminEntity">
@@ -177,7 +193,7 @@
       #{apass,jdbcType=VARCHAR}, #{astatus,jdbcType=SMALLINT}, #{aphone,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.qmall.apple.bean.ShopAdmin">
+  <insert id="insertSelective" parameterType="com.qmall.apple.bean.ShopAdmin" useGeneratedKeys="true" keyProperty="aid">
     insert into shop_admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="aid != null">

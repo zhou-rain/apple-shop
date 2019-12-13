@@ -89,6 +89,32 @@ $.fn.serializeObject = function() {
 };
 
 
+/**
+ * 判断某个集合内是否存在某个值   存在-true 不存在-false
+ * @param arr 集合
+ * @param value 值
+ * @returns {boolean}
+ */
+function isInArray(arr,value){
+    for(let i = 0; i < arr.length; i++){
+        if(value === arr[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+function recorePageNum(pageNum) {
+    sessionStorage.setItem("pageNum",pageNum);
+}
+function getPageNum() {
+    return sessionStorage.getItem("pageNum");
+}
+
+
+
 
 
 

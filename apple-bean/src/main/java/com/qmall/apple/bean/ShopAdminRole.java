@@ -1,6 +1,11 @@
 package com.qmall.apple.bean;
 
-public class ShopAdminRole {
+import java.io.Serializable;
+
+/**
+ * 管理员——角色中间表
+ */
+public class ShopAdminRole implements Serializable {
     private Integer aRId;
 
     private Integer aid;

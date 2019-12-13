@@ -14,6 +14,7 @@ $(function () {
 let search_form = $("#search_form");
 //带条件翻页
 function toPage(pageNum) {
+    recorePageNum(pageNum);
     queryParam.pageSize = pageSize;
     queryParam.pageNum = pageNum;
     let search_form_param = search_form.serializeObject();//拼接查询条件
@@ -165,8 +166,9 @@ function callback_delete(result) {
 2红色叉叉
 3黄色问号
 4灰色锁
+7黄色感叹号
+
 5红色哭脸
 6绿色笑脸
-7黄色感叹号
  */
 

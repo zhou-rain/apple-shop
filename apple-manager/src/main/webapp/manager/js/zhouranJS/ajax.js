@@ -12,9 +12,16 @@ let ajaxData ={
          "token":token,//每次请求必须带上令牌
          "status":"" //用户状态
      },
+     //编辑管理员
      data102:{
+         "userId":userId,//每次请求都需要带上用户ID
+         "token":token,//每次请求必须带上令牌
+	     "aid":""   //用户id
      },
+    //获取所有员工列表
      data103:{
+         "userId":userId,//每次请求都需要带上用户ID
+         "token":token//每次请求必须带上令牌
      },
      data104:{
      },

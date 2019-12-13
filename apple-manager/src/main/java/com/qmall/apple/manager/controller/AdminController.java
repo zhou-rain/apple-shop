@@ -11,7 +11,9 @@ import com.qmall.apple.commons.Msg;
 import com.qmall.apple.commons.Validator;
 import com.qmall.apple.commons.WebUtil;
 import com.qmall.apple.manager.service.ShopAdminService;
+import com.qmall.apple.manager.service.ShopRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /*
@@ -39,75 +43,145 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = {"http://localhost:63343", "null"})
+@CrossOrigin(origins = {"http://localhost:63343", "http://localhost:63342"})
 public class AdminController {
 
 	@Autowired
 	ShopAdminService shopAdminService;
+	@Autowired
+	ShopRoleService shopRoleService;
+
+
+	/**
+	 * 保存-更新
+	 *
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping("/save")
+	public Msg save(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		String aid = WebUtil.getParam(param, "aid");
+		String aacount = WebUtil.getParam(param, "aacount");
+		String aphone = WebUtil.getParam(param, "aphone");
+		String aname = WebUtil.getParam(param, "aname");
+		String apass = WebUtil.getParam(param, "apass");
+		String[] roleIds = request.getParameterValues("roleIds");
+
+		ShopAdmin bean = new ShopAdmin();
+		if (Validator.isNotEmpty(aid)) {
+			//修改
+			bean = shopAdminService.getBeanById(Integer.parseInt(aid));
+		}
+		bean.setAacount(aacount);
+		bean.setAphone(aphone);
+		//如果没输入昵称，默认使账号
+		if(Validator.isEmpty(aname)){
+			bean.setAname(aacount);
+		}else {
+			bean.setAname(aname);
+		}
+
+		bean.setApass(apass);
+
+		String ret = shopAdminService.save(bean, roleIds);
+
+		return Msg.success().add("ret", ret);
+	}
+
+
+	/**
+	 * 根据id获取用户
+	 *
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping("/getEntityById")
+	public Msg getEntityById(@RequestParam Map<String, Object> param) {
+		Integer aid = WebUtil.getIntParam(param, "aid");
+		ShopAdminEntity entity = shopAdminService.getEntityById(aid);//用户
+		List<ShopRoleEntity> allRoleList = shopRoleService.getAllRoleList();//角色
+
+		//用户的角色id集合
+		List<Integer> roleIds = entity.getRoles().stream()
+				.map(ShopRoleEntity::getRid)
+				.collect(Collectors.toList());
+
+		//将用户权限和密码设空传到前端
+		for (ShopRoleEntity roleEntity : entity.getRoles()) {
+			roleEntity.setAuths(null);
+		}
+		return Msg.success().add("entity", entity)
+				.add("allRoleList", allRoleList)
+				.add("roleIds", roleIds);    //所有角色信息
+	}
+
 
 
 	/**
 	 * 状态启用和停用
 	 * 1-启用
 	 * 0-停用
+	 *
 	 * @param param
 	 * @return
 	 */
 	@RequestMapping("/status")
-	public Msg status(@RequestParam Map<String, Object> param){
+	public Msg status(@RequestParam Map<String, Object> param) {
 		String status = WebUtil.getParam(param, "status");
 		int userId = WebUtil.getIntParam(param, "userId");
 
-		String ret = shopAdminService.changeStatus(userId,status);
+		String ret = shopAdminService.changeStatus(userId, status);
 
-		return Msg.success().add("ret",ret);
+		return Msg.success().add("ret", ret);
 	}
 
 	/**
 	 * 删除
+	 *
 	 * @param param
 	 * @return
 	 */
 	@RequestMapping("/del")
-	public Msg del(@RequestParam Map<String, Object> param){
+	public Msg del(@RequestParam Map<String, Object> param) {
 		String ids = WebUtil.getParam(param, "ids");
 		System.out.println("ids = " + ids);
 		String ret = shopAdminService.deleteBatchById(ids);
 
-		return Msg.success().add("ret",ret);
+		return Msg.success().add("ret", ret);
 	}
-	
-	
+
 
 	/**
 	 * 带条件分页
+	 *
 	 * @param param
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public Msg list(@RequestParam Map<String, Object> param){
+	public Msg list(@RequestParam Map<String, Object> param) {
 		List<ShopAdminEntity> list = shopAdminService.list(param);
-		PageInfo<ShopAdminEntity> pageInfo = new PageInfo<>(list,5);
-		return Msg.success().add("pageInfo",pageInfo);
+		PageInfo<ShopAdminEntity> pageInfo = new PageInfo<>(list, 5);
+		return Msg.success().add("pageInfo", pageInfo);
 	}
 
 
 	/**
 	 * 管理员登录
+	 *
 	 * @param param
 	 * @return
 	 */
 	@RequestMapping("/login")
-	public Msg login(@RequestParam Map<String, Object> param, HttpSession session, HttpServletRequest request){
+	public Msg login(@RequestParam Map<String, Object> param, HttpSession session, HttpServletRequest request) {
 		String aacount = WebUtil.getParam(param, "aacount");
 		String apass = WebUtil.getParam(param, "apass");
 
-		if(Validator.isEmpty(aacount)){
-			return Msg.fail().add("msg","用户名不能为空！");
+		if (Validator.isEmpty(aacount)) {
+			return Msg.fail().add("msg", "用户名不能为空！");
 		}
 
-		if(Validator.isEmpty(apass)){
-			return Msg.fail().add("msg","密码不能为空！");
+		if (Validator.isEmpty(apass)) {
+			return Msg.fail().add("msg", "密码不能为空！");
 		}
 
 		ShopAdmin bean = new ShopAdmin();
@@ -115,11 +189,11 @@ public class AdminController {
 		bean.setApass(apass);
 		ShopAdminEntity admin = shopAdminService.login(bean);
 
-		if(admin==null){
-			return Msg.fail().add("msg","账号密码错误！");
+		if (admin == null) {
+			return Msg.fail().add("msg", "账号密码错误！");
 		}
 
-		session.setAttribute(AdminConstants.LOGIN_ADMIN,admin);//登录对象
+		session.setAttribute(AdminConstants.LOGIN_ADMIN, admin);//登录对象
 
 		//获取权限地址的字符串
 		List<String> authPathStrs = getAuthPathStr(admin);
@@ -127,7 +201,7 @@ public class AdminController {
 		for (String s : authPathStrs) {
 			sb.append(s);
 		}
-		session.setAttribute(AdminConstants.AUTH_PATH,sb.toString());//权限
+		session.setAttribute(AdminConstants.AUTH_PATH, sb.toString());//权限
 
 		String ipAddr = WebUtil.getIpAddr(request);
 		String token = WebUtil.getToken(ipAddr, admin.getAid());
@@ -137,17 +211,18 @@ public class AdminController {
 		admin.setRoles(null);
 		admin.setApass(null);
 		return Msg.success()
-				.add(AdminConstants.LOGIN_ADMIN,admin)
-				.add("token",token);
+				.add(AdminConstants.LOGIN_ADMIN, admin)
+				.add("token", token);
 	}
 
 
 	/**
 	 * 获取用户权限地址
+	 *
 	 * @param admin
 	 * @return
 	 */
-	private List<String> getAuthPathStr(ShopAdminEntity admin){
+	private List<String> getAuthPathStr(ShopAdminEntity admin) {
 		List<String> list = new ArrayList<>();
 		for (ShopRoleEntity roles : admin.getRoles()) {
 			for (ShopAuthEntity auth : roles.getAuths()) {
@@ -156,14 +231,6 @@ public class AdminController {
 		}
 		return list;
 	}
-
-
-
-
-
-
-
-
 
 
 }

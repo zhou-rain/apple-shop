@@ -1,5 +1,6 @@
 package com.qmall.apple.dao;
 
+import com.qmall.apple.Entity.ShopRoleEntity;
 import com.qmall.apple.bean.ShopRole;
 import com.qmall.apple.bean.ShopRoleExample;
 import org.apache.ibatis.annotations.Param;
@@ -17,9 +18,9 @@ public interface ShopRoleMapper {
 
     int insertSelective(ShopRole record);
 
-    List<ShopRole> selectByExample(ShopRoleExample example);
+    List<ShopRoleEntity> selectByExample(ShopRoleExample example);
 
-    ShopRole selectByPrimaryKey(Integer rid);
+	ShopRoleEntity selectByPrimaryKey(Integer rid);
 
     int updateByExampleSelective(@Param("record") ShopRole record, @Param("example") ShopRoleExample example);
 

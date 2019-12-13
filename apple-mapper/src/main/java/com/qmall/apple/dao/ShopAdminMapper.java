@@ -22,8 +22,6 @@ public interface ShopAdminMapper {
 
 	ShopAdminEntity selectByPrimaryKey(Integer aid);
 
-	ShopAdmin selectByPrimaryKey_ReturnBean(Integer aid);
-
     int updateByExampleSelective(@Param("record") ShopAdmin record, @Param("example") ShopAdminExample example);
 
     int updateByExample(@Param("record") ShopAdmin record, @Param("example") ShopAdminExample example);
@@ -33,4 +31,12 @@ public interface ShopAdminMapper {
     int updateByPrimaryKey(ShopAdmin record);
 
 	List<ShopAdminEntity> selectByExample_With_Role_Auth(ShopAdminExample example);
+
+	ShopAdminEntity selectPrimaryKey_With_Role_Auth(int aid);
+
+
+
+
+	ShopAdmin selectByPrimaryKey_ReturnBean(Integer aid);
+
 }

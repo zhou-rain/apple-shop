@@ -1,7 +1,7 @@
 package com.qmall.apple.Entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 角色的实体类
@@ -14,13 +14,13 @@ public class ShopRoleEntity implements Serializable {
 
     private String rdesc;
 
-	private List<ShopAuthEntity> auths; //该角色下的具体权限
+	private Set<ShopAuthEntity> auths; //该角色下的具体权限
 
-	public List<ShopAuthEntity> getAuths() {
+	public Set<ShopAuthEntity> getAuths() {
 		return auths;
 	}
 
-	public void setAuths(List<ShopAuthEntity> auths) {
+	public void setAuths(Set<ShopAuthEntity> auths) {
 		this.auths = auths;
 	}
 
