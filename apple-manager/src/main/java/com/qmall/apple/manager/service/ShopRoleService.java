@@ -11,7 +11,7 @@ import java.util.Map;
  * @function:
  */
 public interface ShopRoleService {
-	List<ShopRoleEntity> list(Map<String,Object> param);
+	List<ShopRoleEntity> list(Map<String, Object> param);
 
 	List<ShopRoleEntity> getAllRoleList();
 }

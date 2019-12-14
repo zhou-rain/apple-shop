@@ -15,7 +15,7 @@ public class ArrayUtil {
 	 * @param ids
 	 * @return
 	 */
-	public static List<Integer> StringToIntegerArray(String ids){
+	public static List<Integer> StringToIntegerList(String ids){
 		List<Integer> list = new ArrayList<>();
 		String[] split = ids.split(",");
 		for (String s : split) {

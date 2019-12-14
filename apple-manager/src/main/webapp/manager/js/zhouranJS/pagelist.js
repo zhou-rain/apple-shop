@@ -17,6 +17,7 @@ function toPage(pageNum) {
     recorePageNum(pageNum);
     queryParam.pageSize = pageSize;
     queryParam.pageNum = pageNum;
+
     let search_form_param = search_form.serializeObject();//拼接查询条件
     let result = Object.assign(queryParam, search_form_param);
     getJSON(queryUrl, result, callback_toPage)
@@ -142,6 +143,8 @@ function deleteByIds(dataIds) {
         layer.msg('请选择要删除的按钮',{icon:7,time:1000});
         return;
     }
+    console.log(delparam);
+    
 
     layer.confirm('确认要删除吗？',function(){
         delparam.ids = dataIds;

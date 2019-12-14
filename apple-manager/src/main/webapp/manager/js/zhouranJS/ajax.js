@@ -44,10 +44,13 @@ function getJSON(url,param,callFun){
         url : serverUrl+url,
         type : 'POST',
         data:  param,
+        traditional:true,
         success	: callFun,
         error : function(e){}
       },"json");
 }
+
+
 
 
 /**文件上传的ajax

@@ -11,12 +11,12 @@
  * @param callback_save 回调函数
  */
 function save(saveUrl, form, saveParam, callback_save) {
+
     let formJson = form.serializeObject();
     let result = Object.assign(saveParam, formJson);
     console.log(result);
 
     getJSON(saveUrl, result, callback_save);
-
 }
 
 /**

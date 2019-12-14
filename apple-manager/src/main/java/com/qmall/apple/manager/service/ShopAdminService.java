@@ -15,7 +15,7 @@ public interface ShopAdminService {
 
 	ShopAdminEntity login(ShopAdmin shopAdmin);
 
-	List<ShopAdminEntity> list(Map<String,Object> param);
+	List<ShopAdminEntity> list(Map<String, Object> param);
 
 	//批量删除
 	String deleteBatchById(String ids);

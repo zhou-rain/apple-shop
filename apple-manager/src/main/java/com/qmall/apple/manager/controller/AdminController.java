@@ -55,16 +55,15 @@ public class AdminController {
 	/**
 	 * 保存-更新
 	 *
-	 * @param param
 	 * @return
 	 */
 	@RequestMapping("/save")
-	public Msg save(@RequestParam Map<String, Object> param, HttpServletRequest request) {
-		String aid = WebUtil.getParam(param, "aid");
-		String aacount = WebUtil.getParam(param, "aacount");
-		String aphone = WebUtil.getParam(param, "aphone");
-		String aname = WebUtil.getParam(param, "aname");
-		String apass = WebUtil.getParam(param, "apass");
+	public Msg save(HttpServletRequest request) {
+		String aid = request.getParameter("aid");
+		String aacount = request.getParameter("aacount");
+		String aphone = request.getParameter("aphone");
+		String aname = request.getParameter("aname");
+		String apass = request.getParameter("apass");
 		String[] roleIds = request.getParameterValues("roleIds");
 
 		ShopAdmin bean = new ShopAdmin();
@@ -74,6 +73,7 @@ public class AdminController {
 		}
 		bean.setAacount(aacount);
 		bean.setAphone(aphone);
+		bean.setApass(apass);
 		//如果没输入昵称，默认使账号
 		if(Validator.isEmpty(aname)){
 			bean.setAname(aacount);
@@ -81,10 +81,7 @@ public class AdminController {
 			bean.setAname(aname);
 		}
 
-		bean.setApass(apass);
-
 		String ret = shopAdminService.save(bean, roleIds);
-
 		return Msg.success().add("ret", ret);
 	}
 

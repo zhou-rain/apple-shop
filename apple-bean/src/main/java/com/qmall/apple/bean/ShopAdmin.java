@@ -21,15 +21,20 @@ public class ShopAdmin {
 	/*自己的业务*/
 	private String token;
 	private String ipaddr;
-	private List<Integer> roleIds;
 
-
-	public List<Integer> getRoleIds() {
-		return roleIds;
-	}
-
-	public void setRoleIds(List<Integer> roleIds) {
-		this.roleIds = roleIds;
+	@Override
+	public String toString() {
+		return "ShopAdmin{" +
+				"aid=" + aid +
+				", aname='" + aname + '\'' +
+				", aacount='" + aacount + '\'' +
+				", apass='" + apass + '\'' +
+				", astatus=" + astatus +
+				", aphone='" + aphone + '\'' +
+				", islogin=" + islogin +
+				", token='" + token + '\'' +
+				", ipaddr='" + ipaddr + '\'' +
+				'}';
 	}
 
 	public String getToken() {
@@ -104,19 +109,4 @@ public class ShopAdmin {
         this.aphone = aphone == null ? null : aphone.trim();
     }
 
-	@Override
-	public String toString() {
-		return "ShopAdmin{" +
-				"aid=" + aid +
-				", aname='" + aname + '\'' +
-				", aacount='" + aacount + '\'' +
-				", apass='" + apass + '\'' +
-				", astatus=" + astatus +
-				", aphone='" + aphone + '\'' +
-				", islogin=" + islogin +
-				", token='" + token + '\'' +
-				", ipaddr='" + ipaddr + '\'' +
-				", roleIds=" + roleIds +
-				'}';
-	}
 }

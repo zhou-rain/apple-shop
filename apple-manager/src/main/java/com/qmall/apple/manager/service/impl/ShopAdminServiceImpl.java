@@ -13,6 +13,7 @@ import com.qmall.apple.manager.service.ShopAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +98,7 @@ public class ShopAdminServiceImpl implements ShopAdminService {
 		if (Validator.isEmpty(ids))
 			return "empty";
 
-		List<Integer> idlist = ArrayUtil.StringToIntegerArray(ids);
+		List<Integer> idlist = ArrayUtil.StringToIntegerList(ids);
 
 		try {
 			for (Integer id : idlist) {
@@ -152,11 +153,11 @@ public class ShopAdminServiceImpl implements ShopAdminService {
 
 	@Override
 	public String save(ShopAdmin bean, String[] roleIds) {
-		try {
+
 		//重复性校验
 		if (!checkMuilt(bean))
 			return "more";
-
+		try {
 
 			if(bean.getAid()==null){
 				//新增
