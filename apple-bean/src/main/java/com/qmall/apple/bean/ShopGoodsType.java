@@ -40,4 +40,14 @@ public class ShopGoodsType {
     public void setTimage(String timage) {
         this.timage = timage == null ? null : timage.trim();
     }
+
+	@Override
+	public String toString() {
+		return "ShopGoodsType{" +
+				"tid=" + tid +
+				", tname='" + tname + '\'' +
+				", tdesc='" + tdesc + '\'' +
+				", timage='" + timage + '\'' +
+				'}';
+	}
 }

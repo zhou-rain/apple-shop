@@ -1,18 +1,15 @@
 package com.qmall.apple.Entity;
 
-import java.io.Serializable;
 import java.util.Set;
 
-/**
- * 角色的实体类
- */
-public class ShopRoleEntity implements Serializable {
-
+public class ShopRoleEntity {
     private Integer rid;
 
     private String rname;
 
     private String rdesc;
+
+    private Integer rstatue;
 
 	private Set<ShopAuthEntity> auths; //该角色下的具体权限
 
@@ -24,7 +21,7 @@ public class ShopRoleEntity implements Serializable {
 		this.auths = auths;
 	}
 
-	public Integer getRid() {
+    public Integer getRid() {
         return rid;
     }
 
@@ -48,4 +45,11 @@ public class ShopRoleEntity implements Serializable {
         this.rdesc = rdesc == null ? null : rdesc.trim();
     }
 
+    public Integer getRstatue() {
+        return rstatue;
+    }
+
+    public void setRstatue(Integer rstatue) {
+        this.rstatue = rstatue;
+    }
 }

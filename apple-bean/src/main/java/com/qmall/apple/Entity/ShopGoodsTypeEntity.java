@@ -40,4 +40,14 @@ public class ShopGoodsTypeEntity {
     public void setTimage(String timage) {
         this.timage = timage == null ? null : timage.trim();
     }
+
+	@Override
+	public String toString() {
+		return "ShopGoodsTypeEntity{" +
+				"tid=" + tid +
+				", tname='" + tname + '\'' +
+				", tdesc='" + tdesc + '\'' +
+				", timage='" + timage + '\'' +
+				'}';
+	}
 }

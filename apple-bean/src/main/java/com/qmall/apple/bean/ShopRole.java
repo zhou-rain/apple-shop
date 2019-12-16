@@ -7,6 +7,8 @@ public class ShopRole {
 
     private String rdesc;
 
+    private Integer rstatue;
+
     public Integer getRid() {
         return rid;
     }
@@ -29,5 +31,13 @@ public class ShopRole {
 
     public void setRdesc(String rdesc) {
         this.rdesc = rdesc == null ? null : rdesc.trim();
+    }
+
+    public Integer getRstatue() {
+        return rstatue;
+    }
+
+    public void setRstatue(Integer rstatue) {
+        this.rstatue = rstatue;
     }
 }

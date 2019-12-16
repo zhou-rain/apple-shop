@@ -109,8 +109,8 @@ public class AdminController {
 			roleEntity.setAuths(null);
 		}
 		return Msg.success().add("entity", entity)
-				.add("allRoleList", allRoleList)
-				.add("roleIds", roleIds);    //所有角色信息
+				.add("allRoleList", allRoleList)//所有角色信息
+				.add("roleIds", roleIds);    //所有角色id集合
 	}
 
 

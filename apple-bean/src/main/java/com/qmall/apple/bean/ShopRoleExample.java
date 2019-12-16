@@ -303,6 +303,66 @@ public class ShopRoleExample {
             addCriterion("rdesc not between", value1, value2, "rdesc");
             return (Criteria) this;
         }
+
+        public Criteria andRstatueIsNull() {
+            addCriterion("rstatue is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueIsNotNull() {
+            addCriterion("rstatue is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueEqualTo(Integer value) {
+            addCriterion("rstatue =", value, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueNotEqualTo(Integer value) {
+            addCriterion("rstatue <>", value, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueGreaterThan(Integer value) {
+            addCriterion("rstatue >", value, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueGreaterThanOrEqualTo(Integer value) {
+            addCriterion("rstatue >=", value, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueLessThan(Integer value) {
+            addCriterion("rstatue <", value, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueLessThanOrEqualTo(Integer value) {
+            addCriterion("rstatue <=", value, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueIn(List<Integer> values) {
+            addCriterion("rstatue in", values, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueNotIn(List<Integer> values) {
+            addCriterion("rstatue not in", values, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueBetween(Integer value1, Integer value2) {
+            addCriterion("rstatue between", value1, value2, "rstatue");
+            return (Criteria) this;
+        }
+
+        public Criteria andRstatueNotBetween(Integer value1, Integer value2) {
+            addCriterion("rstatue not between", value1, value2, "rstatue");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

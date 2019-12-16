@@ -55,4 +55,15 @@ public class ShopAuthEntity implements Serializable {
     public void setAupid(Integer aupid) {
         this.aupid = aupid;
     }
+
+	@Override
+	public String toString() {
+		return "ShopAuthEntity{" +
+				"auid=" + auid +
+				", auname='" + auname + '\'' +
+				", aupath='" + aupath + '\'' +
+				", autype=" + autype +
+				", aupid=" + aupid +
+				'}';
+	}
 }
