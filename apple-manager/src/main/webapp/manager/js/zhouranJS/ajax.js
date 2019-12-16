@@ -18,7 +18,7 @@ let ajaxData ={
          "token":token,//每次请求必须带上令牌
 	     "aid":""   //用户id
      },
-    //获取所有员工列表
+    //
      data103:{
          "userId":userId,//每次请求都需要带上用户ID
          "token":token//每次请求必须带上令牌
@@ -40,13 +40,25 @@ const serverUrl ="http://localhost:8080/manager"; //本地;
 
 //ajax请求
 function getJSON(url,param,callFun){
+    param.token = getToken();//必传
+    param.userId = getUserId();//必传
 	$.ajax({
         url : serverUrl+url,
         type : 'POST',
         data:  param,
         traditional:true,
         success	: callFun,
-        error : function(e){}
+        error : function(e){
+            console.log(e.readyState);
+            console.log(e.status);
+            console.log(e.responseText);
+            if(e.readyState===4 && e.status===999){
+                if(confirm("数据异常，请重新登录!")){
+                    sessionStorage.clear();
+                    window.top.location.href= e.responseText;
+                }
+            }
+        }
       },"json");
 }
 
@@ -55,9 +67,8 @@ function getJSON(url,param,callFun){
 
 /**文件上传的ajax
  *
- * 设置form表单的头：
- *<form action="" method="post" id="updateform" enctype="multipart/form-data">
- *  设置要上传的文件input框的 name="upload_file"
+ * 设置form表单的头： enctype="multipart/form-data"
+ *<form id="updateform" enctype="multipart/form-data">
  *
  * @param url       请求地址
  * @param param    const param = new FormData($("#updateform")[0]);
@@ -74,6 +85,8 @@ function fileUpLoad(url,param,callFun) {
         error:function (e) {}
     },"json")
 }
+
+
 
 
 

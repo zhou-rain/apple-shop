@@ -38,7 +38,7 @@
 
         <!-- mysql数据驱动包 -->
         <mysql.connector.version>8.0.11</mysql.connector.version>
-        <druid.version>1.1.21</druid.version>
+        <druid.version>1.1.20</druid.version>
 
     </properties>
 

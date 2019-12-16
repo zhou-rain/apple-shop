@@ -20,4 +20,5 @@ public class AdminConstants {
 	public static final short STATUE_ADMIN_FORBIDDEN = 0;
 
 
+
 }

@@ -75,7 +75,6 @@ Number.prototype.chu = function (arg) {
 
 
 
-
 /*
 加法示例（其它的都类似）
  function calculate() {

@@ -22,6 +22,16 @@ public class ShopAdminEntity implements Serializable {
 
 	private Set<ShopRoleEntity> roles; //一个用户下面所有的角色信息
 
+	private String token;	//用户令牌
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public Set<ShopRoleEntity> getRoles() {
 		return roles;
 	}

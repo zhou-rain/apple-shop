@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
  * @author: zhouR
  * @date: Create in 2019/12/10 - 11:59
  * @function:
+ *
  */
 @RestController
 @RequestMapping("/admin")
@@ -190,6 +191,9 @@ public class AdminController {
 			return Msg.fail().add("msg", "账号密码错误！");
 		}
 
+		String ipAddr = WebUtil.getIpAddr(request);
+		String token = WebUtil.getToken(ipAddr, admin.getAid());
+		admin.setToken(token);
 		session.setAttribute(AdminConstants.LOGIN_ADMIN, admin);//登录对象
 
 		//获取权限地址的字符串
@@ -200,16 +204,10 @@ public class AdminController {
 		}
 		session.setAttribute(AdminConstants.AUTH_PATH, sb.toString());//权限
 
-		String ipAddr = WebUtil.getIpAddr(request);
-		String token = WebUtil.getToken(ipAddr, admin.getAid());
-
-
 		//将用户角色和密码设空传到前端
 		admin.setRoles(null);
 		admin.setApass(null);
-		return Msg.success()
-				.add(AdminConstants.LOGIN_ADMIN, admin)
-				.add("token", token);
+		return Msg.success().add(AdminConstants.LOGIN_ADMIN, admin);
 	}
 
 

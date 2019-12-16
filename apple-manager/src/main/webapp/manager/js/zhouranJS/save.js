@@ -1,21 +1,17 @@
 /* ****************保存********************* */
 
-
-//传入需要序列化表单的jq对象 进行保存
+let saveParam={};  //额外保存内容
 /**
  *  普通form表单
  *
  * @param saveUrl 保存地址
  * @param form  表单jq对象
- * @param saveParam  额外保存内容
+ * @param saveParam  额外保存内容,JSON格式
  * @param callback_save 回调函数
  */
 function save(saveUrl, form, saveParam, callback_save) {
-
     let formJson = form.serializeObject();
     let result = Object.assign(saveParam, formJson);
-    console.log(result);
-
     getJSON(saveUrl, result, callback_save);
 }
 
@@ -24,17 +20,17 @@ function save(saveUrl, form, saveParam, callback_save) {
  *
  * @param saveUrl 保存地址
  * @param form  表单jq对象
- * @param saveParam  额外保存内容
- * @param callback_save 回调函数
+ * @param saveParam  额外保存内容,JSON格式
+ * @param callback_saveFile
  */
-function saveFile(saveUrl, form, saveParam, callback_save) {
+function saveFile(saveUrl, form, saveParam, callback_saveFile) {
     //有fileinput框
     let formdata = new FormData(form[0]);
     //遍历saveParam，将里面的值自动加入formdata传入后台
     for (let key in saveParam) {
         formdata.append(key, saveParam[key]);
     }
-    fileUpLoad(saveUrl, formdata, callback_save);
+    fileUpLoad(saveUrl, formdata, callback_saveFile);
 }
 
 

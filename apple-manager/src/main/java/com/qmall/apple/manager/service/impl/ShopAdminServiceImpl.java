@@ -151,18 +151,25 @@ public class ShopAdminServiceImpl implements ShopAdminService {
 		return shopAdminMapper.selectByPrimaryKey_ReturnBean(aid);
 	}
 
+
+	/**
+	 * 保存-新增
+	 * @param bean
+	 * @param roleIds
+	 * @return
+	 */
 	@Override
 	public String save(ShopAdmin bean, String[] roleIds) {
 
 		//重复性校验
 		if (!checkMuilt(bean))
 			return "more";
+
 		try {
 
 			if(bean.getAid()==null){
 				//新增
 				shopAdminMapper.insertSelective(bean);
-
 			}else {
 				//更新admin表
 				shopAdminMapper.updateByPrimaryKeySelective(bean);
@@ -191,7 +198,6 @@ public class ShopAdminServiceImpl implements ShopAdminService {
 			e.printStackTrace();
 			return "err";
 		}
-
 		return "ok";
 	}
 

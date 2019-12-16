@@ -62,7 +62,7 @@
             //解密： window.decodeURIComponent(window.atob(str));
             jsonStr = window.encodeURIComponent(jsonStr);
             sessionStorage.setItem(loginAdmin.aid,jsonStr);
-            sessionStorage.setItem("token",result.extend.token);
+            sessionStorage.setItem("token",loginAdmin.token);
             sessionStorage.setItem("userId",loginAdmin.aid);
             window.location.href = "index.html?userId="+loginAdmin.aid;
         }

@@ -6,6 +6,7 @@
         <artifactId>apple-dependencies</artifactId>
         <groupId>com.qmall.apple</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../apple-dependencies/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>

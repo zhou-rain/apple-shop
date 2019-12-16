@@ -10,24 +10,24 @@ $(function () {
     toPage(1);
 });
 
-//<搜索框>
-let search_form = $("#search_form");
+//<<搜索查询条件表单>>
+let search_form = "#search_form";
 //带条件翻页
 function toPage(pageNum) {
     recorePageNum(pageNum);
     queryParam.pageSize = pageSize;
     queryParam.pageNum = pageNum;
 
-    let search_form_param = search_form.serializeObject();//拼接查询条件
+    let search_form_param = $(search_form).serializeObject();//拼接查询条件
     let result = Object.assign(queryParam, search_form_param);
-    getJSON(queryUrl, result, callback_toPage)
+    getJSON(queryUrl, result, callback_toPage);
 }
 
 function callback_toPage(result) {
     console.log(result);
     $(".layui-table tbody").empty();
     $(".page").empty();
-    $(check_all_box).prop("checked", false);
+    $(check_all_box).prop("checked", false);//全选按钮取消勾选
 
     let pageInfo = result.extend.pageInfo;
     pageNum = pageInfo.pageNum;
@@ -41,7 +41,7 @@ function callback_toPage(result) {
     }
 
     //构建底部导航
-    //如果总页数比当前 页面尺寸pageSize小的话，就不用构建了
+    //如果总页数比当前 页面尺寸pageSize小，就不构建
     if (pageInfo.total > pageSize) {
         initTFoot(pageInfo);
     }
@@ -87,7 +87,7 @@ $("#sreach_btn").click(function () {
 
 
 
-let check_all_box = "#check_all_box";//<<全选按钮的>>
+let check_all_box = "#check_all_box";//<<全选按钮>>
 let check_each_box = ".check_each";    //<<每一项的小checkbox>>
 
 // 全选按钮的控制
@@ -116,6 +116,15 @@ let delurl; //删除地址
 let delparam = {};//要删除的参数
 
 
+//获取被选中的ID
+function getSelectedIds() {
+    let dataIds = "";
+    $(check_each_box).filter(":checked").each(function () {
+        dataIds += $(this).data("id") + ",";
+    });
+    return dataIds;
+}
+
 //单个删除
 function member_del(obj,id){
     deleteByIds(id);
@@ -128,14 +137,7 @@ $(document).on("click", delete_all_btn, function () {
 });
 
 
-//获取被选中的ID
-function getSelectedIds() {
-    let dataIds = "";
-    $(check_each_box).filter(":checked").each(function () {
-        dataIds += $(this).data("id") + ",";
-    });
-    return dataIds;
-}
+
 
 // 传入id批量删除
 function deleteByIds(dataIds) {
@@ -143,8 +145,6 @@ function deleteByIds(dataIds) {
         layer.msg('请选择要删除的按钮',{icon:7,time:1000});
         return;
     }
-    console.log(delparam);
-    
 
     layer.confirm('确认要删除吗？',function(){
         delparam.ids = dataIds;
@@ -154,7 +154,7 @@ function deleteByIds(dataIds) {
 
 function callback_delete(result) {
     let ret = result.extend.ret;
-    if(ret=="ok"){
+    if(ret==="ok"){
         layer.msg('已删除!',{icon:1,time:1000});
         toPage(1);
     }else{
@@ -167,10 +167,10 @@ function callback_delete(result) {
 /*
 1绿色勾
 2红色叉叉
-3黄色问号
-4灰色锁
 7黄色感叹号
 
+3黄色问号
+4灰色锁
 5红色哭脸
 6绿色笑脸
  */
