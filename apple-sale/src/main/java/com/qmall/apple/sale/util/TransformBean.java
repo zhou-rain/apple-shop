@@ -56,28 +56,20 @@ public interface TransformBean<B, E> {
 
 	/**
 	 * 两个实体类集合之间的相互转化
-	 * @param b
-	 * @return
+	 * @param b 需要转化的集合
+	 * @param e 目标集合的项
+	 * @return 转化后的目标集合
 	 */
-/*
-	default List<E> ChangeBeanList(List<B> b) {
-
+	default List<E> ChangeBeanList(List<B> b,E e) {
 		List<E> list= new ArrayList<>();
-
-		E e = new E();
-
 		for (B b1 : b) {
-
 			E e1 = ChangeBean(b1, e);
-
 			list.add(e1);
-
 		}
-
 		return list;
 
 	}
-*/
+
 
 
 }

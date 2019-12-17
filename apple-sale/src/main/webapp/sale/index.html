@@ -1,9 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -38,6 +32,7 @@
 
 
 </style>
+
 </head>
 <body>
 
@@ -127,22 +122,9 @@
 		<div class="boxes">
 			<div class="section_container">
 				<div class="container">
-					<div class="row">
+					<div class="row" id="type_div">
 
 						<!--就是展示商品类别列表-->
-						<c:forEach items="${goodsTypeList}" var="type">
-							<div class="col-lg-4 box_col">
-								<div class="box">
-									<div class="box_image">
-										<img src="${type.typeImage}" alt="">
-									</div>
-									<div class="box_title trans_200">
-										<a href="queryGoods?goodsTid=${type.typeId}">${type.typeName}</a>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-
 					</div>
 				</div>
 			</div>
@@ -158,9 +140,9 @@
 							<div class="categories_list_container">
 								<ul
 									class="categories_list d-flex flex-row align-items-center justify-content-start">
-									<li><a href="queryGoods?goodsLabel=1">新款上市</a></li>
-									<li><a href="queryGoods?goodsLabel=3">劲爆折扣</a></li>
-									<li><a href="queryGoods?goodsLabel=2">爆款为你</a></li>
+									<li><a href="javascript:;" onclick="queryByGLabel(1)">新款上市</a></li>
+									<li><a href="javascript:;" onclick="queryByGLabel(3)">劲爆折扣</a></li>
+									<li><a href="javascript:;" onclick="queryByGLabel(2)">爆款为你</a></li>
 								</ul>
 							</div>
 						</div>
@@ -170,60 +152,13 @@
 		</div>
 
 		<!-- Products -->
-
 		<div class="products">
 			<div class="section_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
-							<div class="products_container grid">
-
-								<!--循环展示首页商品信息-->
-								<c:forEach items="${goodsList}" var="goods">
-
-									<!-- Product -->
-									<div
-										class="product grid-item 
-										<c:if test="${goods.goodsLabel eq 1}">new</c:if>
-										<c:if test="${goods.goodsLabel eq 2}">hot</c:if>
-										<c:if test="${goods.goodsLabel eq 3}">sale</c:if>
-									">
-										<div class="product_inner">
-											<div class="product_image">
-												<img src="${goods.goodsImage}" alt="">
-
-												<c:if test="${goods.goodsLabel eq 1}">
-													<div class="product_tag">new</div>
-												</c:if>
-												<c:if test="${goods.goodsLabel eq 2}">
-													<div class="product_tag">hot</div>
-												</c:if>
-												<c:if test="${goods.goodsLabel eq 3}">
-													<div class="product_tag">sale</div>
-												</c:if>
-
-											</div>
-											<div class="product_content text-center">
-												<div class="product_title">
-													<a href="queryGoodsDetail?goodsId=${goods.goodsId}">${goods.goodsName}</a>
-												</div>
-												<div class="product_price">
-												￥<fmt:formatNumber value="${goods.goodsPrice * goods.goodsDiscount}" minFractionDigits="1" maxFractionDigits="2"></fmt:formatNumber>
-
-												
-												<c:if test="${goods.goodsLabel eq 3}">
-													<label style="color:black;"><s>${goods.goodsPrice}</s></label>
-												</c:if>
-												
-												</div>
-												<div class="product_button ml-auto mr-auto trans_200">
-													<a href="javascript:void(0);" class="addshopcar" gid="${goods.goodsId}">加入购物车</a>
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</c:forEach>
+							<div class="products_container" id="goodlist_div" style="display: flex;flex-wrap: wrap ">
+                                <!--循环展示首页商品信息-->
 
 							</div>
 						</div>
@@ -231,12 +166,8 @@
 				</div>
 			</div>
 		</div>
-
-
-
 	</div>
 
-	
 	<script src="js/shopcar.js"></script>
 	<script src="styles/bootstrap-4.1.3/popper.js"></script>
 	<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
@@ -251,5 +182,118 @@
 	<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
 	<script src="plugins/Isotope/fitcolumns.js"></script>
 	<script src="js/custom.js"></script>
+
+
+    <script src="zhouranJS/ajax.js"></script>
+    <script src="zhouranJS/calculator.js"></script>
+
+
 </body>
+<script>
+    $(function () {
+        getJSON("/goods/index",{},callback_index);
+    });
+
+
+    function callback_index(result) {
+        console.log(result);
+        //构建类型
+        build_goodType(result);
+        //构建商品列表
+        build_goodList(result);
+
+    }
+
+
+    //展示商品类别列表
+    function build_goodType(result) {
+        let type = result.extend.type;
+        let content = "";
+        $.each(type,function (i,obj) {
+            content+="<div class='col-lg-4 box_col'>" +
+                "   <div class='box'>" +
+                "    <div class=;box_image'>" +
+                "           <img src='"+obj.timage+"' alt='"+obj.tname+"'>" +
+                "   </div>" +
+                "       <div class='box_title trans_200'>" +
+                "           <a href='javascript:;' onclick='queryGoodsByTypeId("+obj.tid+")'>"+obj.tname+"</a>" +
+                "       </div>" +
+                "   </div>" +
+                "</div>";
+        });
+        $("#type_div").empty().append(content)
+
+    }
+
+    //构建商品列表
+    function build_goodList(result) {
+        let list = result.extend.list;
+        let content = "";
+        $.each(list,function (i,obj) {
+
+            let mark = "";
+            if(obj.glabel===1){
+                mark = "new";
+            }else if (obj.glabel===2) {
+                mark="hot";
+            }else if(obj.glabel===3){
+                mark="sale";
+            }
+
+            content+="<div class='product grid-item "+mark+"'>" +
+                "<div class='product_inner'>" +
+                "<a style='cursor: pointer' onclick='queryGoodsDetail("+obj.gid+")'>" +
+                "<div class='product_image'>" +
+                "   <img src='"+obj.gimage+"' alt=''>" +
+                "<div class='product_tag'>"+mark+"</div>" +
+                "</div>" +
+                "<div class='product_content text-center'>" +
+                "<div class='product_title'>" + obj.gname+"</a>" +
+                "</div>" +
+                "<div class='product_price'>" +
+                "￥" + obj.gprice.cheng(obj.gdiscount).toFixed(2);
+                if(obj.glabel===3){
+                    content+="<label style='color:black;'><s>"+obj.gprice+"</s></label>";
+                }
+                content+="</div>" +
+                    "<div class='product_button ml-auto mr-auto trans_200'>" +
+                    "<a href='javascript:void(0);' class='addshopcar' gid='"+obj.gid+"'>加入购物车</a>"+
+                    "</div></div></div></div>"
+
+        });
+
+       $("#goodlist_div").empty().append(content);
+    }
+
+
+    /**
+     * 点击类型跳转页面
+     * @param typeid
+     */
+    function queryGoodsByTypeId(typeid) {
+        alert("根据类型查询商品:typeid = "+typeid);
+        location.href="prolist.html?typeid="+typeid
+    }
+
+    /**
+     * 点击商品详情
+     * @param goodid
+     */
+    function queryGoodsDetail(goodid) {
+        alert("商品id:goodid = "+goodid);
+    }
+
+    /**
+     * 点击类型（爆款
+     * @param glabelid
+     */
+    function queryByGLabel(glabelid) {
+        getJSON("/goods/index",{glabel:glabelid},callback_index)
+    }
+
+</script>
+
+
+
+
 </html>

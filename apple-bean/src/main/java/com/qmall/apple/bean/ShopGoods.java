@@ -1,103 +1,99 @@
 package com.qmall.apple.bean;
 
-public class ShopGoods {
-    private String gid;
+import java.io.Serializable;
 
-    private String gname;
+/**
+ * 商品类别
+ */
+public class ShopGoods implements Serializable {
+	private String gid;
+	private String gname;
+	private String gimage;
+	private Float gprice;
+	private String gdesc;
+	private float gdiscount;  //折扣.  0.8 打八折
+	private int isdelete; // 0 可用 1 已删除
+	private int glabel = -1; // 1: 新品 2:热销 3:折扣
+	private int gsex = -1;  // 0:女装; 1:男装 ; 2:童装;
+	private int gtype;  // 商品类别; 商品类别表goods_type表的外键
 
-    private String gimage;
+	public String getGid() {
+		return gid;
+	}
 
-    private Float gprice;
+	public void setGid(String gid) {
+		this.gid = gid == null ? null : gid.trim();
+	}
 
-    private Integer gtype;
+	public String getGname() {
+		return gname;
+	}
 
-    private String gdesc;
+	public void setGname(String gname) {
+		this.gname = gname == null ? null : gname.trim();
+	}
 
-    private Float gdiscount;
+	public String getGimage() {
+		return gimage;
+	}
 
-    private Integer isdelete;
+	public void setGimage(String gimage) {
+		this.gimage = gimage == null ? null : gimage.trim();
+	}
 
-    private Integer glabel;
+	public Float getGprice() {
+		return gprice;
+	}
 
-    private Integer gsex;
+	public void setGprice(Float gprice) {
+		this.gprice = gprice;
+	}
 
-    public String getGid() {
-        return gid;
-    }
+	public Integer getGtype() {
+		return gtype;
+	}
 
-    public void setGid(String gid) {
-        this.gid = gid == null ? null : gid.trim();
-    }
+	public void setGtype(Integer gtype) {
+		this.gtype = gtype;
+	}
 
-    public String getGname() {
-        return gname;
-    }
+	public String getGdesc() {
+		return gdesc;
+	}
 
-    public void setGname(String gname) {
-        this.gname = gname == null ? null : gname.trim();
-    }
+	public void setGdesc(String gdesc) {
+		this.gdesc = gdesc == null ? null : gdesc.trim();
+	}
 
-    public String getGimage() {
-        return gimage;
-    }
+	public Float getGdiscount() {
+		return gdiscount;
+	}
 
-    public void setGimage(String gimage) {
-        this.gimage = gimage == null ? null : gimage.trim();
-    }
+	public void setGdiscount(Float gdiscount) {
+		this.gdiscount = gdiscount;
+	}
 
-    public Float getGprice() {
-        return gprice;
-    }
+	public Integer getIsdelete() {
+		return isdelete;
+	}
 
-    public void setGprice(Float gprice) {
-        this.gprice = gprice;
-    }
+	public void setIsdelete(Integer isdelete) {
+		this.isdelete = isdelete;
+	}
 
-    public Integer getGtype() {
-        return gtype;
-    }
+	public Integer getGlabel() {
+		return glabel;
+	}
 
-    public void setGtype(Integer gtype) {
-        this.gtype = gtype;
-    }
+	public void setGlabel(Integer glabel) {
+		this.glabel = glabel;
+	}
 
-    public String getGdesc() {
-        return gdesc;
-    }
+	public Integer getGsex() {
+		return gsex;
+	}
 
-    public void setGdesc(String gdesc) {
-        this.gdesc = gdesc == null ? null : gdesc.trim();
-    }
-
-    public Float getGdiscount() {
-        return gdiscount;
-    }
-
-    public void setGdiscount(Float gdiscount) {
-        this.gdiscount = gdiscount;
-    }
-
-    public Integer getIsdelete() {
-        return isdelete;
-    }
-
-    public void setIsdelete(Integer isdelete) {
-        this.isdelete = isdelete;
-    }
-
-    public Integer getGlabel() {
-        return glabel;
-    }
-
-    public void setGlabel(Integer glabel) {
-        this.glabel = glabel;
-    }
-
-    public Integer getGsex() {
-        return gsex;
-    }
-
-    public void setGsex(Integer gsex) {
-        this.gsex = gsex;
-    }
+	public void setGsex(Integer gsex) {
+		this.gsex = gsex;
+	}
 }

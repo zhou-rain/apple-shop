@@ -13,19 +13,19 @@
 			<!-- Language -->
 			<div class="info_languages has_children">
 				<div class="language_flag">
-					<c:if test="${not empty user}">
+					<%--<c:if test="${not empty user}">
 						<img src="${user.uimage}">
-					</c:if>
+					</c:if>--%>
 				</div>
 
 				<div class="dropdown_text">
-				<c:if test="${not empty user}">
+				<%--<c:if test="${not empty user}">
 					欢迎你 ${user.uname}
 				</c:if>
 				<c:if test="${empty user}">
-					<a href="login.jsp">请登录</a>
-				</c:if>
-				
+					<a href="login.html">请登录</a>
+				</c:if>--%>
+                    <a href="login.html">请登录</a>
 				</div>
 
 			</div>
@@ -61,17 +61,17 @@
 	<!-- Sidebar Navigation -->
 	<nav class="sidebar_nav">
 		<ul>
-			<li><a href="index">主页<i class="fa fa-angle-right"
+			<li><a href="index.html">主页<i class="fa fa-angle-right"
 					aria-hidden="true"></i></a></li>
-			<li><a href="queryGoods?goodsSex=0">女装<i class="fa fa-angle-right"
+			<li><a href="prolist.html?gsex=0">女装<i class="fa fa-angle-right"
 					aria-hidden="true"></i></a></li>
-			<li><a href="queryGoods?goodsSex=1">男装<i class="fa fa-angle-right"
+			<li><a href="prolist.html?gsex=1">男装<i class="fa fa-angle-right"
 					aria-hidden="true"></i></a></li>
-			<li><a href="queryGoods?goodsSex=2">童装<i class="fa fa-angle-right"
+			<li><a href="prolist.html?gsex=2">童装<i class="fa fa-angle-right"
 					aria-hidden="true"></i></a></li>
-			<li><a href="queryGoods?goodsSex=3">Lolita<i class="fa fa-angle-right"
+			<li><a href="prolist.html?gsex=3">Lolita<i class="fa fa-angle-right"
 					aria-hidden="true"></i></a></li>
-			<li><a href="queryGoods">列表<i class="fa fa-angle-right"
+			<li><a href="prolist.html">列表<i class="fa fa-angle-right"
 					aria-hidden="true"></i></a></li>
 		</ul>
 	</nav>
