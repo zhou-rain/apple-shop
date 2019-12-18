@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<title>Blog</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="aStar Fashion Template Project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.3/bootstrap.css">
+<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="styles/blog.css">
+<link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+<link rel="stylesheet" type="text/css" href="styles/cart.css">
+<link rel="stylesheet" type="text/css" href="styles/cart_responsive.css">
+<script src="js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+
+	<div class="super_container">
+
+		<div id="dd_div">
+			<script>
+                $("#dd_div").load("sidebar.html",function() {
+                    $(document).on("click","#shopInfo_btn",function () {
+                        shopInfo = $("#shopInfo").val();
+                        //decodeURI()
+                        // encodeURI()
+                        window.location.href="prolist.html?search_shopInfo="+encodeURI(shopInfo);
+                    })
+                });
+			</script>
+
+		</div>
+
+		<!-- Home -->
+
+		<div class="home">
+			<div class="parallax_background parallax-window"
+				data-parallax="scroll" data-image-src="images/blog.jpg"
+				data-speed="0.8"></div>
+			<div class="home_container">
+				<div class="home_content">
+                    <div class="home_title">订单详情:<span id="title_statue">未支付</span></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Blog -->
+
+
+
+		<div class="blog">
+			<div class="section_container">
+				<div class="container">
+					<div class="row" id="time_div">
+                        <h3>倒计时:距离支付还剩 <label id="showtime"></label></h3>
+					</div>
+                    <div class="row">
+                        <button class="btn btn-info" id="back">&lt;&lt;返回</button>
+                    </div>
+					<div class="row load_more_row">
+                        <!-- Cart Bar -->
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" width="40%">商品</th>
+                                <th scope="col">价格</th>
+                                <th scope="col">数量</th>
+                                <th scope="col">总计</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                           <!-- <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>-->
+
+                            </tbody>
+                        </table>
+							
+					</div>
+				</div>
+
+			</div>
+            <div class="section_container">
+                <!-- Cart Total -->
+                <div class="col-xxl-6">
+                    <div class="cart_extra_content cart_extra_total" id="jiesuan">
+                        <div class="cart_extra_title">结算</div>
+                        <ul class="cart_extra_total_list">
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="cart_extra_total_title">总价</div>
+                                <div class="cart_extra_total_value ml-auto" id="all_price">¥0.00</div>
+                            </li>
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="cart_extra_total_title">快递</div>
+                                <div class="cart_extra_total_value ml-auto">¥12.00</div>
+                            </li>
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="cart_extra_total_title">总计</div>
+                                <div class="cart_extra_total_value ml-auto" id="total">¥0.00</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+		</div>
+
+	</div>
+
+	<script src="styles/bootstrap-4.1.3/popper.js"></script>
+	<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
+	<script src="plugins/greensock/TweenMax.min.js"></script>
+	<script src="plugins/greensock/TimelineMax.min.js"></script>
+	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="plugins/greensock/animation.gsap.min.js"></script>
+	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="plugins/easing/easing.js"></script>
+	<script src="plugins/parallax-js-master/parallax.min.js"></script>
+
+    <script src="zhouranJS/common.js"></script>
+    <script src="zhouranJS/ajax.js"></script>
+    <script src="js/shopcar.js"></script>
+    <script src="zhouranJS/calculator.js"></script>
+	<script src="js/blog.js"></script>
+</body>
+
+<script>
+
+    $(function () {
+
+        if (getUrlParam("status") == "pay") {
+            let content = ` <div class="checkout_button trans_200" id="pay_btn">
+                            <a href="javascript:;" >立即支付</a>
+                        </div>`;
+            $("#jiesuan").append(content);
+            $("#title_statue").text("未支付");
+        }else if(getUrlParam("status") == "see"){
+            $("#title_statue").text("已支付");
+            $("#time_div").remove();
+        }
+
+        let param = {};
+        param.pageSize = 100;
+        param.pageNum = 1;
+        param.orderId = getUrlParam("orderId");
+        getJSON("/order/queryOrder",param,callback_list);
+        function callback_list(result) {
+            console.log(result);
+            //构建表格
+            build_body(result);
+        }
+    });
+
+
+
+
+    //构建表格
+    function build_body(result) {
+        let content = "";
+        $.each(result.extend.entity.orderDetails,function (i,obj) {
+            content+=` <tr style="height: 100px">
+                <td>${i+1}</td>
+                <td scope="row">
+
+                     <img class="img" style="width: 100px;height: 100px" src="${obj.shopGoods.gimage}" alt="">
+                </td>
+                <td>￥ ${obj.shopGoods.gprice * obj.shopGoods.gdiscount}</td>
+                <td>${obj.odnumber}</td>
+                <td>￥ ${obj.odprice}</td>
+            </tr>`;
+        });
+        $("tbody").empty().append(content);
+        //
+        $("#all_price").html("¥"+result.extend.entity.ototal);
+        $("#total").html("¥"+(result.extend.entity.ototal+12));
+    }
+
+    $(document).on("click","#pay_btn",function () {
+        let param = {};
+        param.orderId = getUrlParam("orderId");
+        getJSON("/order/pay",param,function (result) {
+            let ret = result.extend.ret;
+            if(ret==="ok"){
+                alert("支付成功！")
+                window.location.href="myorder.html";
+            }else if(ret==="empty"){
+                alert("数据为空")
+            }else {
+                alert("系统异常，请刷新或联系管理员！")
+            }
+        })
+    });
+
+
+    $("#back").click(function () {
+        window.history.go(-1);
+    })
+
+
+
+
+</script>
+
+</html>

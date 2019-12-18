@@ -1,5 +1,6 @@
 package com.qmall.apple.sale.service.impl;
 
+import Constants.SaleConstants;
 import com.github.pagehelper.PageHelper;
 import com.qmall.apple.bean.ShopGoods;
 import com.qmall.apple.bean.ShopGoodsExample;
@@ -55,7 +56,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 		ShopGoodsExample example = new ShopGoodsExample();
 		ShopGoodsExample.Criteria criteria = example.createCriteria();
-
+		criteria.andIsdeleteEqualTo(SaleConstants.GOODS_INUSE);
 		//类型
 		if(typeid!=-1){
 			criteria.andGtypeEqualTo(typeid);
@@ -82,7 +83,7 @@ public class GoodsServiceImpl implements GoodsService {
 		//价格小于最大价格
 		if(Validator.isNotEmpty(maxString)){
 			Float max = calcUtil.StringToFloat(maxString);
-			criteria.andGpriceLessThan(max);
+			criteria.andGpriceLessThanOrEqualTo(max);
 		}
 
 		//价格排序

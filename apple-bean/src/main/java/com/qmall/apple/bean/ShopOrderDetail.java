@@ -1,17 +1,32 @@
 package com.qmall.apple.bean;
 
-public class ShopOrderDetail {
-    private String odid;
+import java.io.Serializable;
 
-    private String oid;
+/**
+ * 订单详情
+ */
+public class ShopOrderDetail implements Serializable {
+    private String odid; //详情id
 
-    private String gid;
+    private String oid;	// 订单id
 
-    private Float odprice;
+    private String gid; //商品id
 
-    private Integer odnumber;
+    private Float odprice; //成交价
 
-    public String getOdid() {
+    private Integer odnumber; //数量
+
+    private ShopGoods shopGoods; //对应商品类
+
+	public ShopGoods getShopGoods() {
+		return shopGoods;
+	}
+
+	public void setShopGoods(ShopGoods shopGoods) {
+		this.shopGoods = shopGoods;
+	}
+
+	public String getOdid() {
         return odid;
     }
 

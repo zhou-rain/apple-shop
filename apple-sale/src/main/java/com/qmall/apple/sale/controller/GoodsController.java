@@ -1,10 +1,12 @@
 package com.qmall.apple.sale.controller;
 
+import Constants.SaleConstants;
 import com.github.pagehelper.PageInfo;
 import com.qmall.apple.bean.ShopGoods;
 import com.qmall.apple.bean.ShopGoodsType;
 import com.qmall.apple.commons.Msg;
 import com.qmall.apple.commons.WebUtil;
+import com.qmall.apple.sale.service.CartService;
 import com.qmall.apple.sale.service.GoodsService;
 import com.qmall.apple.sale.service.GoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,6 @@ public class GoodsController {
 	@Autowired
 	GoodsTypeService goodsTypeService;
 
-
 	/**
 	 * 主页
 	 * @param param
@@ -54,7 +55,8 @@ public class GoodsController {
 
 		//查询6个商品;
 		List<ShopGoods> list2 = goodsService.queryAllGoodsList();
-		Stream<ShopGoods> stream = list2.stream();
+		Stream<ShopGoods> stream = list2.stream()
+				.filter((x) -> x.getIsdelete()==SaleConstants.GOODS_INUSE);
 		if(glabel!=-1){
 			stream = stream.filter((x) -> x.getGlabel()==glabel);
 		}
@@ -74,12 +76,14 @@ public class GoodsController {
 	@RequestMapping("/list")
 	public Msg list(@RequestParam Map<String,Object> param){
 		//查询商品列表
-
-
 		List<ShopGoods> list = goodsService.list(param);
 		PageInfo<ShopGoods> pageInfo = new PageInfo<>(list,5);
 		return Msg.success().add("pageInfo",pageInfo);
 	}
+
+
+
+
 
 
 

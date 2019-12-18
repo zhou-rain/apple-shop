@@ -1,23 +1,38 @@
 package com.qmall.apple.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ShopOrder {
-    private String oid;
+    private String oid; //订单id
 
-    private Integer aid;
+    private Integer aid; //用户id
 
-    private Integer addressid;
+    private Integer addressid; //用户地址
 
-    private Integer ostatus;
+    private Integer ostatus;//状态  1:未支付;2:已支付3:已发货;4:超时失效
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date odate; //订单时间
 
-    private Date odate;
+    private Float ototal; //总价
 
-    private Float ototal;
+    private Integer isdelete; //删除0 可见1
 
-    private Integer isdelete;
+    //商品详情集合
+    private List<ShopOrderDetail> orderDetails = new ArrayList<>();
 
-    public String getOid() {
+	public List<ShopOrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<ShopOrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	public String getOid() {
         return oid;
     }
 

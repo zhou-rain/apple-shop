@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+<title>我的购物车</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="aStar Fashion Template Project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.3/bootstrap.css">
+<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="styles/cart.css">
+<link rel="stylesheet" type="text/css" href="styles/cart_responsive.css">
+<script src="js/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+    /*改变按钮样式*/
+    input[type='checkbox']{
+        width: 18px;
+        height: 18px;
+        background-color: #fff;
+        -webkit-appearance:none;
+        outline:none;
+        border: 1px solid #c9c9c9;
+        border-radius: 2px;
+    }
+    input[type='checkbox']:checked{
+        background: url("images/checked.png")no-repeat center;
+        background-size: 1.2rem;
+    }
+</style>
+
+<body>
+
+	<div class="super_container">
+		<div id="dd_div">
+			<script>
+                $("#dd_div").load("sidebar.html",function() {
+                    $(document).on("click","#shopInfo_btn",function () {
+                        shopInfo = $("#shopInfo").val();
+                        //decodeURI()
+                        // encodeURI()
+                        window.location.href="prolist.html?search_shopInfo="+encodeURI(shopInfo);
+                    })
+                });
+			</script>
+
+		</div>
+
+		<div class="home">
+			<div class="parallax_background parallax-window"
+				data-parallax="scroll"
+				data-image-src="images/product_background.jpg" data-speed="0.8"></div>
+			<div class="home_container">
+				<div class="home_content">
+					<div class="home_title">Cart</div>
+					<div class="breadcrumbs">
+						<ul
+							class="d-flex flex-row align-items-center justify-content-start">
+							<li><a href="index">主页</a></li>
+							<li>俺的购物车</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Cart -->
+
+		<div class="cart_section">
+			<div class="section_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="cart_container">
+							<form method="post">
+								<!-- Cart Bar -->
+								<div class="cart_bar">
+									<ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-start">
+										<li>商品</li>
+										<li>类别</li>
+										<li>价格</li>
+										<li>数量</li>
+										<li>总计</li>
+										<li>
+                                            <input type="checkbox" id="allcheck" />
+                                        </li>
+									</ul>
+								</div>
+
+								<!-- Cart Items -->
+								<div class="cart_items">
+									<ul class="cart_items_list">
+                                        <!--购物车列表-->
+                                    </ul>
+								</div>
+
+								<!-- Cart Buttons -->
+								<div
+									class="cart_buttons d-flex flex-row align-items-start justify-content-start">
+									<div
+										class="cart_buttons_inner ml-auto d-flex flex-row align-items-start justify-content-start flex-wrap">
+										<div class="button button_continue trans_200">
+											<a href="myorder.html">我的订单</a>
+										</div>
+										<div class="button button_clear trans_200">
+											<a href="javascript:;" id="clear_cart">清空购物车</a>
+										</div>
+										<div class="button button_update trans_200">
+											<a href="javascript:;" id="a_account">结算</a>
+										</div>
+									</div>
+								</div>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section_container cart_extra_container">
+				<div class="container">
+					<div class="row">
+
+						<!-- Cart Total -->
+						<div class="col-xxl-6">
+							<div class="cart_extra cart_extra_2">
+								<div class="cart_extra_content cart_extra_total">
+									<div class="cart_extra_title">结算</div>
+									<ul class="cart_extra_total_list">
+										<li class="d-flex flex-row align-items-center justify-content-start">
+											<div class="cart_extra_total_title">总价</div>
+											<div class="cart_extra_total_value ml-auto">¥0.00</div>
+										</li>
+										<li
+											class="d-flex flex-row align-items-center justify-content-start">
+											<div class="cart_extra_total_title">快递</div>
+											<div class="cart_extra_total_value ml-auto">¥12.00</div>
+										</li>
+										<li
+											class="d-flex flex-row align-items-center justify-content-start">
+											<div class="cart_extra_total_title">总计</div>
+											<div class="cart_extra_total_value ml-auto">¥0.00</div>
+										</li>
+									</ul>
+									<div class="checkout_button trans_200">
+										<a href="javascript:;" >立即结算</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--<script src="styles/bootstrap-4.1.3/popper.js"></script>-->
+	<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
+	<script src="plugins/greensock/TweenMax.min.js"></script>
+	<script src="plugins/greensock/TimelineMax.min.js"></script>
+	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="plugins/greensock/animation.gsap.min.js"></script>
+	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="plugins/easing/easing.js"></script>
+	<script src="plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="js/cart.js"></script>
+
+
+
+    <script src="zhouranJS/common.js"></script>
+    <script src="zhouranJS/ajax.js"></script>
+    <script src="zhouranJS/calculator.js"></script>
+    <script src="js/shopcar.js"></script>
+
+<script>
+
+    //点击结算
+    $("#a_account,.checkout_button").click(function () {
+        //获取所有被选中的checkbox
+        let ids = "";
+        $.each($(".item:checked"),function () {
+            ids += $(this).val()+",";
+        });
+        if(isEmpty(ids)){
+            alert("未选中商品！");
+            return;
+        }
+        if(confirm("确认提交订单吗？")){
+            getJSON("/order/creatOrder",{"ids":ids},function (result) {
+                let ret = result.extend.ret;
+                if(ret==="empty"){
+                    alert("数据为空")
+                }else if(ret==="err"){
+                    alert("系统异常，请刷新或联系管理员！")
+                }else {
+                    window.location.href="orderinfo.html?orderId="+ret+"&status=pay";
+                }
+            })
+        }
+
+
+
+    });
+
+    //清空购物车
+    $("#clear_cart").click(function () {
+        if($(".item").length<1){
+            alert("没东西");
+            $("#allcheck").prop("checked",false);
+            return;
+        }
+
+       getJSON("/cart/clear",{},function (result) {
+           if(result.code===100){
+               //清空列表
+               $("#allcheck").prop("checked",false);
+               $(".cart_items_list").empty();
+               $("#cart_num").html(0);
+               $("#cart_price").html("¥0.0");
+               change_total();
+               alert("清完了-.-");
+           }else {
+               alert("系统异常，请刷新或联系管理员！");
+           }
+       })
+    });
+
+
+    $(function () {
+        self_load_cart();
+    });
+
+    //加载购物车
+    function self_load_cart() {
+        getJSON("/cart/query",{},function (result) {
+            console.log(result);
+            
+            $("#cart_num").html(result.extend.calc.totalCount);
+            $("#cart_price").html("¥"+result.extend.calc.totalMoney);
+
+            //购物车列表
+            build_cartList(result);
+        })
+    }
+
+    //构建购物车列表
+    function build_cartList(result) {
+        let content = "";
+        $.each(result.extend.list,function (i,obj) {
+            content+=`<li id="li_${obj.goodsId}" data-id="${obj.id}" class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+                <div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
+                    <div>
+                        <div class="product_image">
+                            <img src="${obj.goods.gimage}" alt="">
+                        </div>
+                    </div>
+                    <div class="product_name">
+                        <a href="product.html?goodName=${obj.goods.gname}">${obj.goods.gname}</a>
+                    </div>
+                </div>
+                <div class="product_color text-lg-center product_text">${obj.goods.goodsType.tname}</div>
+
+                <div class="product_price text-lg-center product_text">¥${obj.goods.gprice * obj.goods.gdiscount}</div>
+                <div class="product_quantity_container">
+                    <div class="product_quantity ml-lg-auto mr-lg-auto text-center">
+                        <span class="product_text product_num">${obj.quantity}</span>
+                        <div class="qty_sub qty_button trans_200 text-center" gid="${obj.goodsId}">
+                            <span>-</span>
+                        </div>
+                        <div class="qty_add qty_button trans_200 text-center" gid="${obj.goodsId}">
+                            <span>+</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product_total text-lg-center product_text">
+                    ¥<label id="lab_${obj.goodsId}">${obj.quantity * obj.goods.gprice}</label>
+                </div>
+                <div class="product_size text-lg-center product_text">
+                    <input type="checkbox" class="item" name="goodscheck" value="${obj.id}" />
+                </div>
+            </li>`;
+        });
+
+        $(".cart_items_list").empty().append(content);
+    }
+
+    //计算所有被选中的商品总价
+    function change_total() {
+        //根据选中的checkbox，往上追溯价格，累加
+        let checked_list = $(".item:checked");
+        let all_totalMoney=0; //总价
+        $.each(checked_list,function () {
+           let each_total =  $(this).parent().prev().find("label").text();
+            //将所有总价累加
+            all_totalMoney += parseFloat(each_total);
+        });
+
+        //将总价赋值到结算的总价
+        $(".cart_extra_total_list li:eq(0) div:eq(1)").html("¥"+all_totalMoney.toFixed(2));
+
+
+        //加上快递
+        let fast_di = $(".cart_extra_total_list li:eq(1) div:eq(1)").text();
+        fast_di = fast_di.substring(1);
+        fast_di = parseFloat(fast_di);
+
+
+
+        //如果没有选择商品，那么不计算快递
+        if(all_totalMoney===0){
+            fast_di=0;
+        }
+
+        //给总计赋值
+        let total = all_totalMoney.jia(fast_di);
+        $(".cart_extra_total_list li:eq(2) div:eq(1)").text("￥"+total.toFixed(2));
+
+    }
+
+
+
+
+    //全选按钮的控制
+     $(document).on("click","#allcheck",function () {
+         $(".item").prop("checked",$(this).prop("checked"));
+         change_total();//计算总价
+     });
+    $(document).on("click",".item",function () {
+       let total =  $(".item").length;
+       let checked =  $(".item").filter(":checked").length;
+       $("#allcheck").prop("checked",total==checked);
+        change_total();//计算总价
+    });
+
+
+    //点击减号
+    $(document).on("click",".qty_sub",function () {
+        let gid = $(this).attr("gid");
+        let mark = "reduce";//减少标志
+        let that = this;
+
+        //获取数量
+        let quantity = $(that).parent().children("span").text();
+        if(quantity==="1"){
+            if(confirm("你他妈的再删就没了!!!")){
+                mark = "remove";//移除标志
+            }else{
+                return;
+            }
+        }
+        getJSON("/cart/reduce",{"gid":gid},function (result) {
+            if(result.code===100){
+                after(that,mark);
+
+                change_total();
+            }else {
+                alert("系统异常，请刷新或联系管理员！");
+            }
+        })
+    });
+
+    //点击加号
+    $(document).on("click",".qty_add",function () {
+
+        let gid = $(this).attr("gid");
+        let mark = "add";//新增标志
+        let that = this;
+
+       getJSON("/cart/add",{"gid":gid},function (result) {
+            if(result.code===100){
+                after(that,mark);
+                change_total();
+            }else {
+                alert("系统异常，请刷新或联系管理员！");
+            }
+        })
+    });
+
+    //加减回调
+    function after(that,mark) {
+        //获取数量
+        let quantity = $(that).parent().children("span").text();
+        if(mark==="add"){
+            //数量+1
+            $(that).parent().children("span").text(parseInt(quantity).jia(1));
+        }else if(mark==="reduce"){
+            //数量-1
+            $(that).parent().children("span").text(parseInt(quantity).jian(1));
+        }else if(mark==="remove"){
+            //移除
+            $(that).parents("li").remove();
+        }
+
+        //获取单价
+        let eachPrice = $(that).parent().parent().prev().text();
+        eachPrice=eachPrice.substring(1);
+        eachPrice = parseFloat(eachPrice); //单价
+        //获取总数量
+        quantity = $(that).parent().children("span").text();//当前数量
+        quantity = parseFloat(quantity); //数量
+        //当前商品的总价
+        $(that).parent().parent().next().find("label").text(quantity.cheng(eachPrice));
+
+
+        change_total();//计算总价
+        load_cart();
+    }
+
+
+
+
+
+</script>
+
+</body>
+
+
+
+</html>

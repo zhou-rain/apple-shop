@@ -1,6 +1,8 @@
 import com.qmall.apple.commons.WebUtil;
 import org.junit.Test;
 
+import java.util.UUID;
+
 /**
  * @author: zhouR
  * @date: Create in 2019/12/12 - 10:25
@@ -17,5 +19,13 @@ public class test {
 		String token = WebUtil.getToken("127.0.0.1", 5);
 		System.out.println("token = " + token);
 
+	}
+
+	/**
+	 * function:
+	 */
+	@Test
+	public void tes1t(){
+		System.out.println(UUID.randomUUID().toString().length());
 	}
 }

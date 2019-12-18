@@ -1,6 +1,6 @@
 package com.qmall.apple.Entity;
 
-public class ShopOrderDetail {
+public class ShopOrderDetailEntity {
     private String odid;
 
     private String oid;

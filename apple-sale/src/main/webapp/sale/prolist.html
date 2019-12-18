@@ -1,356 +1,390 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<title>商品列表</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="aStar Fashion Template Project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.3/bootstrap.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="styles/categories.css">
-<link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+    <title>商品列表</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="aStar Fashion Template Project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.3/bootstrap.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="styles/categories.css">
+    <link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
 
-<script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 
-	<div class="super_container">
+<div class="super_container">
 
-		<div id="dd_div">
-			<script>
-				$("#dd_div").load("sidebar.jsp");
-			</script>
+    <div id="dd_div">
 
-		</div>
+        <script>
+            $("#dd_div").load("sidebar.html",callback_load);
 
-		<!-- Home -->
+            //左边栏点击搜索商品的回调函数
+            function callback_load() {
+                $(document).on("click","#shopInfo_btn",function () {
+                    shopInfo = $("#shopInfo").val();
+                    let url = window.location.search;
+                    if(url.indexOf("search_shopInfo">-1)){
+                        window.location.href=url;
+                        return;
+                    }
+                    if (url.indexOf("?")>-1) {
+                        url+="&search_shopInfo="+shopInfo;
+                    }else {
+                        url+="?search_shopInfo="+shopInfo;
+                    }
+                    window.location.href=url;
+                })
+            }
+        </script>
 
-		<div class="home">
-			<div class="parallax_background parallax-window"
-				data-parallax="scroll" data-image-src="images/categories.jpg"
-				data-speed="0.8"></div>
-			<div class="home_container">
-				<div class="home_content">
-					<div class="home_title">商品列表</div>
-					<div class="breadcrumbs">
-						<ul class="d-flex flex-row align-items-center justify-content-start" id="head_ul">
-							<li><a href="index">主页</a></li>
-							<li><a href="">女装</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+    </div>
 
-		<!-- Products -->
+    <!-- Home -->
 
-		<div class="products">
-
-			<!-- Sorting & Filtering -->
-			<div class="products_bar">
-				<div class="section_container">
-					<div class="container">
-						<div class="row">
-							<div class="col">
-								<div
-									class="products_bar_content d-flex flex-column flex-xxl-row align-items-start align-items-xxl-center justify-content-start">
-									<div class="product_categories">
-										<ul class="d-flex flex-row align-items-start justify-content-start flex-wrap" id="glabel_ul">
-											<li data-id="-1" class="active"><a href="javascript:;">所有</a></li>
-											<li data-id="2"><a href="javascript:;">热门2</a></li>
-											<li data-id="1"><a href="javascript:;">新款1</a></li>
-											<li data-id="3"><a href="javascript:;">折扣3</a></li>
-										</ul>
-									</div>
-									<div
-										class="products_bar_side ml-xxl-auto d-flex flex-row align-items-center justify-content-start">
-										<div class="products_dropdown product_dropdown_sorting">
-											<div class="isotope_sorting_text">
-												<span>默认排序</span><i class="fa fa-caret-down"
-													aria-hidden="true"></i>
-											</div>
-											<ul id="sort_ul">
-												<li class="item_sorting_btn" data-sort="">默认</li>
-												<li class="item_sorting_btn" data-sort="gprice_desc">价格</li>
-												<li class="item_sorting_btn" data-sort="gname_desc">名称</li>
-											</ul>
-										</div>
-										<div
-											class="product_view d-flex flex-row align-items-center justify-content-start">
-											<!--<div class="view_item active"><img src="images/view_1.png" alt=""></div>
-										<div class="view_item"><img src="images/view_2.png" alt=""></div>
-										<div class="view_item"><img src="images/view_3.png" alt=""></div>-->
-											<div class="isotope_filter_text">
-											<form method="post" id="search_form">
-												<span>价格</span>
-                                                <input type="number" name="min" style="text-align: center;" />
-                                                -
-                                                <input type="number"  name="max" style="text-align: center;" />
-												<button type="button">搜索</button>
-											</form>
-
-
-
-
-
-
-											</div>
-										</div>
-										<div
-											class="products_dropdown text-right product_dropdown_filter">
-											<div class="isotope_filter_text">
-												<span>过滤</span><i class="fa fa-caret-down"
-													aria-hidden="true"></i>
-											</div>
-											<ul>
-												<li class="item_filter_btn" data-filter="*">所有</li>
-												<li class="item_filter_btn" data-filter=".hot">热销</li>
-												<li class="item_filter_btn" data-filter=".new">新品</li>
-												<li class="item_filter_btn" data-filter=".sale">折扣</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="section_container">
-				<div class="container">
-					<div class="row">
-						<div class="col">
-                            <div class="products_container" id="goodlist_div" style="display: flex;flex-wrap: wrap ">
-                                <!--商品列表-->
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="section_container" id="navBar">
-
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+    <div class="home">
+        <div class="parallax_background parallax-window"
+             data-parallax="scroll" data-image-src="images/categories.jpg"
+             data-speed="0.8"></div>
+        <div class="home_container">
+            <div class="home_content">
+                <div class="home_title">商品列表</div>
+                <div class="breadcrumbs">
+                    <ul class="d-flex flex-row align-items-center justify-content-start" id="head_ul">
+                        <li><a href="index.html">主页</a></li>
+                        <li><a href=""></a></li>
                     </ul>
-                </nav>
+                </div>
+            </div>
+        </div>
+    </div>
 
-			</div>
-			
-		</div>
+    <!-- Products -->
 
-	</div>
-	<script type="text/javascript" src="js/shopcar.js"></script>
-	<script src="styles/bootstrap-4.1.3/popper.js"></script>
-	<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
-	<script src="plugins/greensock/TweenMax.min.js"></script>
-	<script src="plugins/greensock/TimelineMax.min.js"></script>
-	<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-	<script src="plugins/greensock/animation.gsap.min.js"></script>
-	<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-	<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-	<script src="plugins/easing/easing.js"></script>
-	<script src="plugins/parallax-js-master/parallax.min.js"></script>
-	<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-	<script src="plugins/Isotope/fitcolumns.js"></script>
-	<script src="js/categories.js"></script>
+    <div class="products">
 
-    <script src="zhouranJS/common.js"></script>
-    <script src="zhouranJS/ajax.js"></script>
-
-	<script type="text/javascript">
-
-        let glabel; //热门2爆款1折扣3
-        let typeid; //外键 类型分类
-        let gsex; //男女童
-        let min; //最小价格
-        let max; //最大价格
-
-        //价格排序
-        let gprice_desc = "";
-        //名称排序
-        let gname_desc = "";
-
-        //分页
-        let pageSize = 10; //页面尺寸，默认为5
-
-        let searchParam ={};//搜索条件
-
-
-        //价格区间
-        $("#search_form button").click(function(){
-            min = $("#search_form input[name='min']").val();
-            max = $("#search_form input[name='max']").val();
-            toPage(1);
-        });
-
+        <!-- Sorting & Filtering -->
+        <div class="products_bar">
+            <div class="section_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div
+                                    class="products_bar_content d-flex flex-column flex-xxl-row align-items-start align-items-xxl-center justify-content-start">
+                                <div class="product_categories">
+                                    <ul class="d-flex flex-row align-items-start justify-content-start flex-wrap"
+                                        id="glabel_ul">
+                                        <li data-id="-1" class="active"><a href="javascript:;">所有</a></li>
+                                        <li data-id="2"><a href="javascript:;">热门2</a></li>
+                                        <li data-id="1"><a href="javascript:;">新款1</a></li>
+                                        <li data-id="3"><a href="javascript:;">折扣3</a></li>
+                                    </ul>
+                                </div>
+                                <div
+                                        class="products_bar_side ml-xxl-auto d-flex flex-row align-items-center justify-content-start">
+                                    <div class="products_dropdown product_dropdown_sorting">
+                                        <div class="isotope_sorting_text">
+                                            <span>默认排序</span><i class="fa fa-caret-down"
+                                                                aria-hidden="true"></i>
+                                        </div>
+                                        <ul id="sort_ul">
+                                            <li class="item_sorting_btn" data-sort="">默认</li>
+                                            <li class="item_sorting_btn" data-sort="gprice_desc">价格</li>
+                                            <li class="item_sorting_btn" data-sort="gname_desc">名称</li>
+                                        </ul>
+                                    </div>
+                                    <div
+                                            class="product_view d-flex flex-row align-items-center justify-content-start">
+                                        <!--<div class="view_item active"><img src="images/view_1.png" alt=""></div>
+                                    <div class="view_item"><img src="images/view_2.png" alt=""></div>
+                                    <div class="view_item"><img src="images/view_3.png" alt=""></div>-->
+                                        <div class="isotope_filter_text">
+                                            <form method="post" id="search_form">
+                                                <span>价格</span>
+                                                <input type="number" name="min" style="text-align: center;"/>
+                                                -
+                                                <input type="number" name="max" style="text-align: center;"/>
+                                                <button type="button">搜索</button>
+                                            </form>
 
 
-        //热门2爆款1折扣3
-        $("#glabel_ul li").click(function () {
-            $(this).addClass("active").siblings().removeClass("active");
-            let id = $(this).data("id");
-            glabel = id;
-            gprice_desc='';
-            gname_desc='';
-            toPage(1);
-        });
+                                        </div>
+                                    </div>
+                                    <div
+                                            class="products_dropdown text-right product_dropdown_filter">
+                                        <div class="isotope_filter_text">
+                                            <span>过滤</span><i class="fa fa-caret-down"
+                                                              aria-hidden="true"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="item_filter_btn" data-filter="*">所有</li>
+                                            <li class="item_filter_btn" data-filter=".hot">热销</li>
+                                            <li class="item_filter_btn" data-filter=".new">新品</li>
+                                            <li class="item_filter_btn" data-filter=".sale">折扣</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="products_container" id="goodlist_div" style="display: flex;flex-wrap: wrap ">
+                            <!--商品列表-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section_container" id="navBar" style="display: flex;justify-content: center">
+        <nav aria-label="Page navigation example" >
 
-        //排序
-        $("#sort_ul li").click(function () {
-            let sort = $(this).data("sort");
-            if(sort==="gprice_desc"){
-                gprice_desc = sort;
-            }else if(sort==="gname_desc"){
-                gname_desc = sort;
-            }else{
-                gprice_desc=null;
-                gname_desc=null;
+            <ul class="pagination pagination-lg">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="js/shopcar.js"></script>
+<script src="styles/bootstrap-4.1.3/popper.js"></script>
+<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
+<script src="plugins/greensock/TweenMax.min.js"></script>
+<script src="plugins/greensock/TimelineMax.min.js"></script>
+<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="plugins/greensock/animation.gsap.min.js"></script>
+<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="plugins/Isotope/fitcolumns.js"></script>
+<script src="js/categories.js"></script>
+
+<script src="zhouranJS/common.js"></script>
+<script src="zhouranJS/ajax.js"></script>
+<script src="js/shopcar.js"></script>
+
+<script type="text/javascript">
+
+    let glabel; //热门2爆款1折扣3
+    let typeid; //外键 类型分类
+    let gsex; //男女童
+    let min; //最小价格
+    let max; //最大价格
+    let shopInfo; //模糊查询商品名称
+    let gprice_desc = "";//价格排序
+    let gname_desc = "";//名称排序
+    let pageSize = 10; //页面尺寸，默认为10
+
+    let searchParam = {};//搜索条件
+
+
+
+
+    //价格区间
+    $("#search_form button").click(function () {
+        min = $("#search_form input[name='min']").val();
+        max = $("#search_form input[name='max']").val();
+        toPage(1);
+    });
+
+
+    //热门2爆款1折扣3
+    $("#glabel_ul li").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        let id = $(this).data("id");
+        glabel = id;
+        gprice_desc = '';
+        gname_desc = '';
+        toPage(1);
+    });
+
+    //排序
+    $("#sort_ul li").click(function () {
+        let sort = $(this).data("sort");
+        if (sort === "gprice_desc") {
+            gprice_desc = sort;
+        } else if (sort === "gname_desc") {
+            gname_desc = sort;
+        } else {
+            gprice_desc = null;
+            gname_desc = null;
+        }
+        toPage(1);
+    });
+
+
+    //初始化查询条件
+    function initSearchParam() {
+        searchParam.glabel = glabel;
+        searchParam.typeid = typeid;
+        searchParam.gsex = gsex;
+        searchParam.min = min;
+        searchParam.max = max;
+        searchParam.gname_desc = gname_desc;
+        searchParam.gprice_desc = gprice_desc;
+        searchParam.shopInfo=shopInfo;
+        if (isNotEmpty(gprice_desc)) {
+            searchParam.gprice_desc = 'gprice_desc';
+        }
+        if (isNotEmpty(gname_desc)) {
+            searchParam.gname_desc = 'gname_desc';
+        }
+    }
+
+    $(function () {
+        //页面进来先查找url上的id
+        let type = getUrlParam("typeid");
+        let gsexid = getUrlParam("gsex");
+        let search_shopInfo = getUrlParam("search_shopInfo");
+        search_shopInfo=decodeURI(search_shopInfo);
+        //decodeURI()
+        // encodeURI()
+
+
+        if (isNotEmpty(gsexid)) {
+            $("#head_ul li:eq(1) a").attr("prolist.html?gsex=" + gsex);
+            let word;
+            if (gsexid == 0) {
+                word = "女装";
+            } else if (gsexid == 1) {
+                word = "男装";
+            } else if (gsexid == 2) {
+                word = "童装";
+            } else if (gsexid == 3) {
+                word = "LOLITA";
             }
-            toPage(1);
-        });
-
-
-
-        //初始化查询条件
-        function initSearchParam() {
-            searchParam.glabel=glabel;
-            searchParam.typeid=typeid;
-            searchParam.gsex=gsex;
-            searchParam.min=min;
-            searchParam.max=max;
-            searchParam.gname_desc=gname_desc;
-            searchParam.gprice_desc=gprice_desc;
-
-            if(isNotEmpty(gprice_desc)){
-                searchParam.gprice_desc='gprice_desc';
-            }
-            if(isNotEmpty(gname_desc)){
-                searchParam.gname_desc='gname_desc';
-            }
+            gsex = gsexid;
+            $("#head_ul li:eq(1) a").text(word);
         }
 
-
-        $(function () {
-            //页面进来先查找url上的id
-            let type = getUrlParam("typeid");
-            let gsexid = getUrlParam("gsex");
-
-
-            if(isNotEmpty(gsexid)){
-                $("#head_ul li:eq(1) a").attr("prolist.html?gsex="+gsex);
-                let word;
-                if(gsexid==0){
-                    word="女装";
-                }else if(gsexid==1){
-                    word="男装";
-                }else if(gsexid==2){
-                    word="童装";
-                }else if(gsexid==3){
-                    word="LOLITA";
-                }
-                gsex=gsexid;
-                $("#head_ul li:eq(1) a").text(word);
-            }
-
-            if(isNotEmpty(typeid)){
-                typeid=type
-            }
-
-            toPage(1);
-        });
-
-
-
-
-        //带条件翻页
-        function toPage(pageNum){
-            initSearchParam();
-            searchParam.pageSize=pageSize;
-            searchParam.pageNum=pageNum;
-            getJSON("/goods/list",searchParam,callback_list);
+        if (isNotEmpty(typeid)) {
+            typeid = type
         }
-        //请求回调函数
-        function callback_list(result) {
-            console.log(result);
-            //构建商品列表
-            build_List(result);
-            //构建底部导航条
-            build_navBar(result);
+        if (isNotEmpty(search_shopInfo)) {
+            shopInfo = search_shopInfo
         }
 
+        toPage(1);
+    });
+
+
+    //带条件翻页
+    function toPage(pageNum) {
+        initSearchParam();
+        searchParam.pageSize = pageSize;
+        searchParam.pageNum = pageNum;
+        getJSON("/goods/list", searchParam, callback_list);
+    }
+
+    //请求回调函数
+    function callback_list(result) {
+        console.log(result);
         //构建商品列表
-        function build_List(result){
-            let list = result.extend.pageInfo.list;
-            let content="";
-            $.each(list,function (i, obj) {
-
-                let mark = "";
-                if(obj.glabel===1){
-                    mark = "new";
-                }else if (obj.glabel===2) {
-                    mark="hot";
-                }else if(obj.glabel===3){
-                    mark="sale";
-                }
-
-                content+="<div class='product grid-item "+mark+"'>" +
-                    "<div class='product_inner'>" +
-                    "<a style='cursor: pointer' onclick='queryGoodsDetail("+obj.gid+")'>" +
-                    "<div class='product_image'>" +
-                    "   <img src='"+obj.gimage+"' alt=''>" +
-                    "<div class='product_tag'>"+mark+"</div>" +
-                    "</div>" +
-                    "<div class='product_content text-center'>"+
-                    "<div class='product_title'>" +
-                    "<a href=''>"+obj.gname+"</a></div>" +
-                    "<div class='product_price'>¥"+obj.gprice+"</div>" +
-                    "<div class='product_button ml-auto mr-auto trans_200'>" +
-                    "<a href='javascript:void(0);' class='addshopcar' gid='"+obj.gid+"'>添加到购物车</a>" +
-                    "</div></div></div></div>";
-            })
-            $("#goodlist_div").empty().append(content);
-        }
-
+        build_List(result);
         //构建底部导航条
-        function build_navBar(result){
-            let pageinfo = result.extend.pageInfo;
-            let content="";
+        build_navBar(result);
+    }
+
+    //构建商品列表
+    function build_List(result) {
+        let list = result.extend.pageInfo.list;
+        let content = "";
+        $.each(list, function (i, obj) {
+
+            let mark = "";
+            if (obj.glabel === 1) {
+                mark = "new";
+            } else if (obj.glabel === 2) {
+                mark = "hot";
+            } else if (obj.glabel === 3) {
+                mark = "sale";
+            }
+
+            content += "<div class='product grid-item " + mark + "'>" +
+                "<div class='product_inner'>" +
+                "<a style='cursor: pointer' onclick='queryGoodsDetail(" + obj.gid + ")'>" +
+                "<div class='product_image'>" +
+                "   <img src='" + obj.gimage + "' alt=''>" +
+                "<div class='product_tag'>" + mark + "</div>" +
+                "</div>" +
+                "<div class='product_content text-center'>" +
+                "<div class='product_title'>" +
+                "<a href=''>" + obj.gname + "</a></div>" +
+                "<div class='product_price'>¥" + obj.gprice + "</div>" +
+                "<div class='product_button ml-auto mr-auto trans_200'>" +
+                "<a href='javascript:;' class='addshopcar' onclick='addCart("+obj.gid+")'   data-gid='" + obj.gid + "'>添加到购物车</a>" +
+                "</div></div></div></div>";
+        })
+        $("#goodlist_div").empty().append(content);
+    }
 
 
 
-            $("#navBar").empty().append(content);
 
+    //构建底部导航条
+    function build_navBar(result) {
+        let pageinfo = result.extend.pageInfo;
+        let content = "";
+
+
+       // $("#navBar").empty().append(content);
+
+    }
+
+    //商品详情
+    function queryGoodsDetail(goodid) {
+        console.log(goodid);
+
+    }
+
+
+
+    $(window).scroll(function () {
+        let scrollTop = $(this).scrollTop();
+        let scrollHeight = $(document).height();
+        let windowHeight = $(this).height();
+
+        console.log("当前滚动条高度:"+scrollTop);
+        console.log("当前可视屏幕："+windowHeight);
+
+        console.log("总滚动条高度:"+scrollHeight);
+
+        if (scrollHeight - (scrollTop + windowHeight) < 50 ) {
+
+            console.log("到底了,发起请求")
         }
-        
-        function queryGoodsDetail(goodid) {
-            console.log(goodid);
-            
-        }
+    });
 
 
 
-	
 
-	</script>
+</script>
 </body>
 </html>

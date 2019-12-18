@@ -25,7 +25,7 @@
 
 	<div id="dd_div">
 		<script>
-			$("#dd_div").load("sidebar.jsp");
+			$("#dd_div").load("sidebar.html");
 			
 		</script>
 		

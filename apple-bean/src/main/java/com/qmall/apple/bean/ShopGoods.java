@@ -16,6 +16,35 @@ public class ShopGoods implements Serializable {
 	private int glabel = -1; // 1: 新品 2:热销 3:折扣
 	private int gsex = -1;  // 0:女装; 1:男装 ; 2:童装;
 	private int gtype;  // 商品类别; 商品类别表goods_type表的外键
+	private ShopGoodsType goodsType;
+
+	public void setIsdelete(int isdelete) {
+		this.isdelete = isdelete;
+	}
+
+	public void setGlabel(int glabel) {
+		this.glabel = glabel;
+	}
+
+	public void setGsex(int gsex) {
+		this.gsex = gsex;
+	}
+
+	public void setGtype(int gtype) {
+		this.gtype = gtype;
+	}
+
+	public ShopGoodsType getGoodsType() {
+		return goodsType;
+	}
+
+	public void setGoodsType(ShopGoodsType goodsType) {
+		this.goodsType = goodsType;
+	}
+
+	public void setGdiscount(float gdiscount) {
+		this.gdiscount = gdiscount;
+	}
 
 	public String getGid() {
 		return gid;

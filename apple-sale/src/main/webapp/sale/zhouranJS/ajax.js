@@ -24,12 +24,13 @@ let ajaxData ={
 
 
 //服务器地址
-const serverUrl ="http://localhost:8081/sale"; //本地;
+const serverUrl ="http://localhost:8081"; //本地;
 //const serverUrl ='';  //服务器地址
 
 
 //ajax请求
 function getJSON(url,param,callFun){
+    param.userId=1;
 	$.ajax({
         url : serverUrl+url,
         type : 'POST',

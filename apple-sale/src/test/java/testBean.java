@@ -32,4 +32,6 @@ public class testBean implements TransformBean<ShopGoodsType,ShopGoodsTypeEntity
 
 
 
+
+
 }

@@ -119,7 +119,7 @@ function isNotEmpty(obj){
 }
 
 function isEmpty(obj) {
-    return !isNotNull(obj);
+    return !isNotEmpty(obj);
 }
 
 

@@ -41,7 +41,14 @@
 		<div id="dd_div">
 			<!--异步加载其他文件-->
 			<script>
-				$("#dd_div").load("sidebar.jsp");
+				$("#dd_div").load("sidebar.html",function() {
+                    $(document).on("click","#shopInfo_btn",function () {
+                        shopInfo = $("#shopInfo").val();
+                        //decodeURI()
+                        // encodeURI()
+                        window.location.href="prolist.html?search_shopInfo="+encodeURI(shopInfo);
+                    })
+                });
 			</script>
 
 		</div>
@@ -185,6 +192,7 @@
 
 
     <script src="zhouranJS/ajax.js"></script>
+    <script src="js/shopcar.js"></script>
     <script src="zhouranJS/calculator.js"></script>
 
 
@@ -195,6 +203,7 @@
     });
 
 
+    //首页数据回调
     function callback_index(result) {
         console.log(result);
         //构建类型
@@ -257,7 +266,7 @@
                 }
                 content+="</div>" +
                     "<div class='product_button ml-auto mr-auto trans_200'>" +
-                    "<a href='javascript:void(0);' class='addshopcar' gid='"+obj.gid+"'>加入购物车</a>"+
+                    "<a href='javascript:;' class='addshopcar' onclick='addCart("+obj.gid+")' gid='"+obj.gid+"'>加入购物车</a>"+
                     "</div></div></div></div>"
 
         });
@@ -271,7 +280,6 @@
      * @param typeid
      */
     function queryGoodsByTypeId(typeid) {
-        alert("根据类型查询商品:typeid = "+typeid);
         location.href="prolist.html?typeid="+typeid
     }
 
@@ -290,6 +298,8 @@
     function queryByGLabel(glabelid) {
         getJSON("/goods/index",{glabel:glabelid},callback_index)
     }
+
+
 
 </script>
 

@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qmall.apple.dao.ShopOrderMapper">
-  <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
+
+
+    <select id="selectByPrimaryKey_With_Detail" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM `shop_order`
+        LEFT JOIN `shop_order_detail` ON shop_order.`oid` = shop_order_detail.`oid`
+        LEFT JOIN `shop_goods` g ON g.`gid` = shop_order_detail.`gid`
+        where shop_order.`oid` = #{oid}
+    </select>
+
+
+    <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
+        <id column="oid" jdbcType="VARCHAR" property="oid" />
+        <result column="aid" jdbcType="INTEGER" property="aid" />
+        <result column="addressId" jdbcType="INTEGER" property="addressid" />
+        <result column="ostatus" jdbcType="INTEGER" property="ostatus" />
+        <result column="odate" jdbcType="TIMESTAMP" property="odate" />
+        <result column="ototal" jdbcType="REAL" property="ototal" />
+        <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+
+        <collection property="orderDetails" ofType="com.qmall.apple.bean.ShopOrderDetail">
+            <id column="odid" jdbcType="VARCHAR" property="odid" />
+            <result column="oid" jdbcType="VARCHAR" property="oid" />
+            <result column="gid" jdbcType="VARCHAR" property="gid" />
+            <result column="odprice" jdbcType="REAL" property="odprice" />
+            <result column="odnumber" jdbcType="INTEGER" property="odnumber" />
+
+            <association property="shopGoods" javaType="com.qmall.apple.bean.ShopGoods">
+                <id column="gid" jdbcType="VARCHAR" property="gid" />
+                <result column="gname" jdbcType="VARCHAR" property="gname" />
+                <result column="gimage" jdbcType="VARCHAR" property="gimage" />
+                <result column="gprice" jdbcType="REAL" property="gprice" />
+                <result column="gtype" jdbcType="INTEGER" property="gtype" />
+                <result column="gdesc" jdbcType="VARCHAR" property="gdesc" />
+                <result column="gdiscount" jdbcType="REAL" property="gdiscount" />
+                <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+                <result column="glabel" jdbcType="INTEGER" property="glabel" />
+                <result column="gsex" jdbcType="INTEGER" property="gsex" />
+            </association>
+        </collection>
+
+    </resultMap>
+
+
+
+ <!-- <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
     <id column="oid" jdbcType="VARCHAR" property="oid" />
     <result column="aid" jdbcType="INTEGER" property="aid" />
     <result column="addressId" jdbcType="INTEGER" property="addressid" />
@@ -9,7 +53,7 @@
     <result column="odate" jdbcType="TIMESTAMP" property="odate" />
     <result column="ototal" jdbcType="REAL" property="ototal" />
     <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
-  </resultMap>
+  </resultMap>-->
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

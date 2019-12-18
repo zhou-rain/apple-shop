@@ -7,14 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/** 
+/**
  * 说明：日期处理
  * 创建人：周冉
  * 修改时间：2018年12月20日
  * @version
  */
 public class DateUtil {
-	
+
 	private final static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
 	private final static SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM-dd");
 	private final static SimpleDateFormat sdfDays = new SimpleDateFormat("yyyyMMdd");
@@ -22,8 +22,9 @@ public class DateUtil {
 	private final static SimpleDateFormat sdfTimes = new SimpleDateFormat("yyyyMMddHHmmss");
 	private final static SimpleDateFormat sdftimesPlus = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
+	public final static String yyyyMMdd = "yyyy-MM-dd";
 
-	
+
 	/**
 	 * 获取YYYY格式
 	 * @return
@@ -77,13 +78,13 @@ public class DateUtil {
 
 
 	/**
-	* @Title: compareDate
-	* @Description: TODO(日期比较，如果s>=e 返回true 否则返回false)
-	* @param s
-	* @param e
-	* @return boolean  
-	* @throws
-	* @author fh
+	 * @Title: compareDate
+	 * @Description: (日期比较，如果s>=e 返回true 否则返回false)
+	 * @param s
+	 * @param e
+	 * @return boolean
+	 * @throws
+	 * @author fh
 	 */
 	public static boolean compareDate(String s, String e) {
 		if(fomatDate(s)==null||fomatDate(e)==null){
@@ -106,6 +107,19 @@ public class DateUtil {
 		}
 	}
 
+	public static Date fomatDate(String date,String pattern) {
+		DateFormat fmt = new SimpleDateFormat(pattern);
+		try {
+			return fmt.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+
+
 	/**
 	 * 校验日期是否合法
 	 * @return
@@ -120,7 +134,7 @@ public class DateUtil {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @param startTime
 	 * @param endTime
@@ -137,65 +151,65 @@ public class DateUtil {
 			return 0;
 		}
 	}
-	 
+
 	/**
-     * <li>功能描述：时间相减得到天数
-     * @param beginDateStr
-     * @param endDateStr
-     * @return
-     * long 
-     * @author Administrator
-     */
-    public static long getDaySub(String beginDateStr,String endDateStr){
-        long day=0;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date beginDate = null;
-        Date endDate = null;
-        
-            try {
-				beginDate = format.parse(beginDateStr);
-				endDate= format.parse(endDateStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-            day=(endDate.getTime()-beginDate.getTime())/(24*60*60*1000);
-            //System.out.println("相隔的天数="+day);
-      
-        return day;
-    }
-    
-    /**
-     * 得到n天之后的日期
-     * @param days
-     * @return
-     */
-    public static String getAfterDayDate(String days) {
-    	int daysInt = Integer.parseInt(days);
-    	
-        Calendar canlendar = Calendar.getInstance(); // java.util包
-        canlendar.add(Calendar.DATE, daysInt); // 日期减 如果不够减会将月变动
-        Date date = canlendar.getTime();
-        
-        SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateStr = sdfd.format(date);
-        
-        return dateStr;
-    }
-    
-    /**
-     * 得到n天之后是周几
-     * @param days
-     * @return
-     */
-    public static String getAfterDayWeek(String days) {
-    	int daysInt = Integer.parseInt(days);
-        Calendar canlendar = Calendar.getInstance(); // java.util包
-        canlendar.add(Calendar.DATE, daysInt); // 日期减 如果不够减会将月变动
-        Date date = canlendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("E");
-        String dateStr = sdf.format(date);
-        return dateStr;
-    }
+	 * <li>功能描述：时间相减得到天数
+	 * @param beginDateStr
+	 * @param endDateStr
+	 * @return
+	 * long
+	 * @author Administrator
+	 */
+	public static long getDaySub(String beginDateStr,String endDateStr){
+		long day=0;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date beginDate = null;
+		Date endDate = null;
+
+		try {
+			beginDate = format.parse(beginDateStr);
+			endDate= format.parse(endDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		day=(endDate.getTime()-beginDate.getTime())/(24*60*60*1000);
+		//System.out.println("相隔的天数="+day);
+
+		return day;
+	}
+
+	/**
+	 * 得到n天之后的日期
+	 * @param days
+	 * @return
+	 */
+	public static String getAfterDayDate(String days) {
+		int daysInt = Integer.parseInt(days);
+
+		Calendar canlendar = Calendar.getInstance(); // java.util包
+		canlendar.add(Calendar.DATE, daysInt); // 日期减 如果不够减会将月变动
+		Date date = canlendar.getTime();
+
+		SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateStr = sdfd.format(date);
+
+		return dateStr;
+	}
+
+	/**
+	 * 得到n天之后是周几
+	 * @param days
+	 * @return
+	 */
+	public static String getAfterDayWeek(String days) {
+		int daysInt = Integer.parseInt(days);
+		Calendar canlendar = Calendar.getInstance(); // java.util包
+		canlendar.add(Calendar.DATE, daysInt); // 日期减 如果不够减会将月变动
+		Date date = canlendar.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("E");
+		String dateStr = sdf.format(date);
+		return dateStr;
+	}
 
 	/**
 	 * 转换成sql时间    格式：yyyy-MM-dd HH:mm:ss
@@ -208,9 +222,9 @@ public class DateUtil {
 
 
 	public static void main(String[] args) {
-    	System.out.println(getDays());
-    	System.out.println(getAfterDayWeek("3"));
-    }
+		System.out.println(getDays());
+		System.out.println(getAfterDayWeek("3"));
+	}
 
 
 
