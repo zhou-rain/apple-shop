@@ -61,7 +61,7 @@
                         <h3>倒计时:距离支付还剩 <label id="showtime"></label></h3>
 					</div>
                     <div class="row">
-                        <button class="btn btn-info" id="back">&lt;&lt;返回</button>
+                        <button class="btn btn-info" onclick="javascript:history.go(-1)">&lt;&lt;返回</button>
                     </div>
 					<div class="row load_more_row">
                         <!-- Cart Bar -->
@@ -70,7 +70,8 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col" width="40%">商品</th>
+                                <th scope="col">商品</th>
+                                <th scope="col">名称</th>
                                 <th scope="col">价格</th>
                                 <th scope="col">数量</th>
                                 <th scope="col">总计</th>
@@ -135,26 +136,61 @@
     <script src="zhouranJS/ajax.js"></script>
     <script src="js/shopcar.js"></script>
     <script src="zhouranJS/calculator.js"></script>
-	<script src="js/blog.js"></script>
 </body>
 
 <script>
 
     $(function () {
 
+
+
+
+        //支付页面
         if (getUrlParam("status") == "pay") {
             let content = ` <div class="checkout_button trans_200" id="pay_btn">
                             <a href="javascript:;" >立即支付</a>
                         </div>`;
             $("#jiesuan").append(content);
             $("#title_statue").text("未支付");
+
+
+            getJSON("/order/getlimitTime",{"orderId":getUrlParam("orderId")},function (result) {
+                console.log(result);
+                
+                let limit = result.extend.limitTime;
+                let date = new Date();
+                date.setTime(limit);//应该是一个动态的,以后台的计数为标准
+                //$("#showtime").text("30:00");
+                setInterval(function(){
+                    let str;
+
+                    date.setTime(date.getTime()-1000);
+
+                    str = date.getMinutes() + ":" + (date.getSeconds()<10 ? '0'+date.getSeconds() : date.getSeconds());
+
+                    $("#showtime").text(str);
+                    
+                    console.log(str);
+                    if(str=="0:00"){
+                        alert("订单已失效!");
+                        window.location.href="myorder.html";
+                    }
+
+                }, 1000);
+
+            })
+
+
+
+
+        //查看订单页面
         }else if(getUrlParam("status") == "see"){
             $("#title_statue").text("已支付");
             $("#time_div").remove();
         }
 
         let param = {};
-        param.pageSize = 100;
+        param.pageSize = 20;
         param.pageNum = 1;
         param.orderId = getUrlParam("orderId");
         getJSON("/order/queryOrder",param,callback_list);
@@ -172,12 +208,12 @@
     function build_body(result) {
         let content = "";
         $.each(result.extend.entity.orderDetails,function (i,obj) {
-            content+=` <tr style="height: 100px">
+            content+=` <tr style="height: 130px;width:130px">
                 <td>${i+1}</td>
-                <td scope="row">
-
-                     <img class="img" style="width: 100px;height: 100px" src="${obj.shopGoods.gimage}" alt="">
+                <td>
+                     <img class="img" style="width: 130px;height: 130px" src="${obj.shopGoods.gimage}" alt="">
                 </td>
+                <td><a href="product.html?goodsId=${obj.gid}">${obj.shopGoods.gname}</a></td>
                 <td>￥ ${obj.shopGoods.gprice * obj.shopGoods.gdiscount}</td>
                 <td>${obj.odnumber}</td>
                 <td>￥ ${obj.odprice}</td>
@@ -204,11 +240,6 @@
             }
         })
     });
-
-
-    $("#back").click(function () {
-        window.history.go(-1);
-    })
 
 
 

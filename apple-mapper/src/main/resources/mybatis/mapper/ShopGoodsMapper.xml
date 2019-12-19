@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qmall.apple.dao.ShopGoodsMapper">
+
+
+    <select id="selectByPrimaryKey_WithType" parameterType="java.lang.String" resultMap="BaseResultMap_With_Type">
+        SELECT *
+        FROM `shop_goods` g
+        LEFT JOIN `shop_goods_type` t ON t.`tid` = g.`gtype`
+        where gid = #{gid,jdbcType=VARCHAR}
+    </select>
+
+
+    <resultMap id="BaseResultMap_With_Type" type="com.qmall.apple.bean.ShopGoods">
+        <id column="gid" jdbcType="VARCHAR" property="gid" />
+        <result column="gname" jdbcType="VARCHAR" property="gname" />
+        <result column="gimage" jdbcType="VARCHAR" property="gimage" />
+        <result column="gprice" jdbcType="REAL" property="gprice" />
+        <result column="gtype" jdbcType="INTEGER" property="gtype" />
+        <result column="gdesc" jdbcType="VARCHAR" property="gdesc" />
+        <result column="gdiscount" jdbcType="REAL" property="gdiscount" />
+        <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+        <result column="glabel" jdbcType="INTEGER" property="glabel" />
+        <result column="gsex" jdbcType="INTEGER" property="gsex" />
+        <association property="goodsType" javaType="com.qmall.apple.bean.ShopGoodsType">
+            <id column="tid" jdbcType="INTEGER" property="tid" />
+            <result column="tname" jdbcType="VARCHAR" property="tname" />
+            <result column="tdesc" jdbcType="VARCHAR" property="tdesc" />
+            <result column="timage" jdbcType="VARCHAR" property="timage" />
+        </association>
+    </resultMap>
+
+
   <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopGoods">
     <id column="gid" jdbcType="VARCHAR" property="gid" />
     <result column="gname" jdbcType="VARCHAR" property="gname" />

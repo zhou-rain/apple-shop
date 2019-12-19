@@ -109,4 +109,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<ShopGoods> queryAllGoodsList() {
 		return shopGoodsMapper.selectByExample(null);
 	}
+
+	@Override
+	public ShopGoods getEntityById(String goodsId) {
+		return shopGoodsMapper.selectByPrimaryKey_WithType(goodsId);
+	}
 }

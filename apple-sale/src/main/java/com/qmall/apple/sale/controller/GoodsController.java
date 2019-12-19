@@ -83,6 +83,19 @@ public class GoodsController {
 
 
 
+	/**
+	 * 根据商品id查询
+	 * @param goodsId
+	 * @return
+	 */
+	@RequestMapping("/queryById")
+	public Msg queryById(String goodsId){
+		//查询商品列表
+		ShopGoods entity =  goodsService.getEntityById(goodsId);
+		return Msg.success().add("entity",entity);
+	}
+
+
 
 
 

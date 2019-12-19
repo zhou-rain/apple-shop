@@ -29,4 +29,10 @@ public interface GoodsService {
 	List<ShopGoods> queryAllGoodsList();
 
 
+	/**
+	 * 根据商品id获取实例
+	 * @param goodsId
+	 * @return
+	 */
+	ShopGoods getEntityById(String goodsId);
 }

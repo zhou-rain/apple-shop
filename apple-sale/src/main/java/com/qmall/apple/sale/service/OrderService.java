@@ -20,4 +20,6 @@ public interface OrderService {
 	ShopOrder queryOrder(String orderId);
 
 	String paySuccess(String orderId);
+
+	String payTimeOut(String orderId);
 }

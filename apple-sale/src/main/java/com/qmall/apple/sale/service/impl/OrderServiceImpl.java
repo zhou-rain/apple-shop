@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 	 * 创建订单  必须要在一个事务中
 	 * @param ids 购物车ID
 	 * @param userId 用户id
-	 * @return
+	 * @return 返回订单号
 	 */
 	@Override
 	public String creatOrder(String ids, Integer userId) {
@@ -94,32 +94,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	/**
-	 *根据订单号查询
-	 * @param orderId
-	 * @return
-	 */
-	@Override
-	public ShopOrder queryOrder(String orderId) {
-		return shopOrderMapper.selectByPrimaryKey_With_Detail(orderId);
-	}
-
-
-	@Override
-	public String paySuccess(String orderId) {
-		ShopOrder entity = new ShopOrder();
-		entity.setOstatus(SaleConstants.ORDER_STATUS_PAY);
-		entity.setOid(orderId);
-		try {
-			shopOrderMapper.updateByPrimaryKeySelective(entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "err";
-		}
-		return "ok";
-	}
-
-
-	/**
 	 * 计算总价
 	 * @param ids
 	 * @return
@@ -143,6 +117,55 @@ public class OrderServiceImpl implements OrderService {
 			ototal+=each_total;
 		}
 		return ototal;
+	}
+
+	/**
+	 *根据订单号查询
+	 * @param orderId
+	 * @return
+	 */
+	@Override
+	public ShopOrder queryOrder(String orderId) {
+		return shopOrderMapper.selectByPrimaryKey_With_Detail(orderId);
+	}
+
+
+	/**
+	 * 支付
+	 * @param orderId
+	 * @return
+	 */
+	@Override
+	public String paySuccess(String orderId) {
+		ShopOrder entity = new ShopOrder();
+		entity.setOstatus(SaleConstants.ORDER_STATUS_PAY);
+		entity.setOid(orderId);
+		try {
+			shopOrderMapper.updateByPrimaryKeySelective(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "err";
+		}
+		return "ok";
+	}
+
+	/**
+	 * 订单失效
+	 * @param orderId
+	 * @return
+	 */
+	@Override
+	public String payTimeOut(String orderId) {
+		ShopOrder shopOrder = new ShopOrder();
+		shopOrder.setOid(orderId);
+		shopOrder.setOstatus(SaleConstants.ORDER_STATUS_TIMEOUT);
+		try {
+			shopOrderMapper.updateByPrimaryKeySelective(shopOrder);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "err";
+		}
+		return "ok";
 	}
 
 

@@ -143,14 +143,6 @@ public class CartController {
 	@Scheduled(cron = "0 */1 * * * ?")
 	public String time(int userId) {
 
-
-
 		return "";
 	}
-
-
-
-
-
-
 }

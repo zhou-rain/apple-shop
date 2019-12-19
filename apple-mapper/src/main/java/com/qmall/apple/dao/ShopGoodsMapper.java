@@ -28,4 +28,6 @@ public interface ShopGoodsMapper {
     int updateByPrimaryKeySelective(ShopGoods record);
 
     int updateByPrimaryKey(ShopGoods record);
+
+	ShopGoods selectByPrimaryKey_WithType(String gid);
 }

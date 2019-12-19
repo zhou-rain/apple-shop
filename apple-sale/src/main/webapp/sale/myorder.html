@@ -81,7 +81,7 @@
 
     $(function () {
         let param = {};
-        param.pageSize = 100;
+        param.pageSize = 20;
         param.pageNum = 1;
         getJSON("/order/list", param, callback_list);
         function callback_list(result) {

@@ -16,7 +16,25 @@
 
     <script src="js/jquery-3.2.1.min.js"></script>
 </head>
+<style>
+
+    .order {
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+    }
+    .order .line {
+        display: inline-block;
+        width: 150px;
+        border-top: 1px solid #ccc ;
+    }
+    .order .txt {
+        color: #686868;
+        vertical-align: middle;
+    }
+</style>
 <body>
+
 
 <div class="super_container">
 
@@ -147,7 +165,10 @@
                 </div>
             </div>
         </div>
-        <div class="section_container" id="navBar" style="display: flex;justify-content: center">
+        <div  id="under-line">
+
+        </div>
+        <!--<div class="section_container" id="navBar" style="display: flex;justify-content: center">
         <nav aria-label="Page navigation example" >
 
             <ul class="pagination pagination-lg">
@@ -166,7 +187,7 @@
                 </li>
             </ul>
         </nav>
-        </div>
+        </div>-->
 
     </div>
 
@@ -200,44 +221,15 @@
     let shopInfo; //模糊查询商品名称
     let gprice_desc = "";//价格排序
     let gname_desc = "";//名称排序
-    let pageSize = 10; //页面尺寸，默认为10
+
+    let pageSize = 4; //页面尺寸，默认为4
+    let pageNum = 1;//页数
+    let total = -1;//记录总条数
 
     let searchParam = {};//搜索条件
 
 
 
-
-    //价格区间
-    $("#search_form button").click(function () {
-        min = $("#search_form input[name='min']").val();
-        max = $("#search_form input[name='max']").val();
-        toPage(1);
-    });
-
-
-    //热门2爆款1折扣3
-    $("#glabel_ul li").click(function () {
-        $(this).addClass("active").siblings().removeClass("active");
-        let id = $(this).data("id");
-        glabel = id;
-        gprice_desc = '';
-        gname_desc = '';
-        toPage(1);
-    });
-
-    //排序
-    $("#sort_ul li").click(function () {
-        let sort = $(this).data("sort");
-        if (sort === "gprice_desc") {
-            gprice_desc = sort;
-        } else if (sort === "gname_desc") {
-            gname_desc = sort;
-        } else {
-            gprice_desc = null;
-            gname_desc = null;
-        }
-        toPage(1);
-    });
 
 
     //初始化查询条件
@@ -315,6 +307,7 @@
     //构建商品列表
     function build_List(result) {
         let list = result.extend.pageInfo.list;
+        total = result.extend.pageInfo.total;
         let content = "";
         $.each(list, function (i, obj) {
 
@@ -345,22 +338,49 @@
         $("#goodlist_div").empty().append(content);
     }
 
+    //价格区间
+    $("#search_form button").click(function () {
+        min = $("#search_form input[name='min']").val();
+        max = $("#search_form input[name='max']").val();
+        toPage(1);
+    });
+
+
+    //热门2爆款1折扣3
+    $("#glabel_ul li").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        let id = $(this).data("id");
+        glabel = id;
+        gprice_desc = '';
+        gname_desc = '';
+        toPage(1);
+    });
+
+    //排序
+    $("#sort_ul li").click(function () {
+        let sort = $(this).data("sort");
+        if (sort === "gprice_desc") {
+            gprice_desc = sort;
+        } else if (sort === "gname_desc") {
+            gname_desc = sort;
+        } else {
+            gprice_desc = null;
+            gname_desc = null;
+        }
+        toPage(1);
+    });
+
 
 
 
     //构建底部导航条
     function build_navBar(result) {
-        let pageinfo = result.extend.pageInfo;
-        let content = "";
-
-
-       // $("#navBar").empty().append(content);
 
     }
 
     //商品详情
-    function queryGoodsDetail(goodid) {
-        console.log(goodid);
+    function queryGoodsDetail(goodsId) {
+        location.href="product.html?goodsId="+goodsId;
 
     }
 
@@ -371,17 +391,73 @@
         let scrollHeight = $(document).height();
         let windowHeight = $(this).height();
 
-        console.log("当前滚动条高度:"+scrollTop);
+        /*console.log("当前滚动条高度:"+scrollTop);
         console.log("当前可视屏幕："+windowHeight);
 
-        console.log("总滚动条高度:"+scrollHeight);
+        console.log("总滚动条高度:"+scrollHeight);*/
 
-        if (scrollHeight - (scrollTop + windowHeight) < 50 ) {
+        if (scrollHeight - (scrollTop + windowHeight)<1 ) {
 
-            console.log("到底了,发起请求")
+            console.log("到底了");
+
+            //如果总量/页面大小
+            if(total/pageSize >pageNum){
+                console.log("当前页面"+pageNum);
+                pageNum++;
+                searchParam.pageSize=pageSize;
+                searchParam.pageNum = pageNum;
+                getJSON("/goods/list", searchParam, callback_scrolllist);
+            }else {
+
+                let content = `<div class="order">
+                                <span class="line"></span>
+                                <span class="txt">我也是有底线的</span>
+                                <span class="line"></span>
+                            </div>`;
+
+                $("#under-line").empty().append(content)
+
+
+            }
+
         }
     });
 
+    function callback_scrolllist(result) {
+
+        console.log(result);
+
+        let list = result.extend.pageInfo.list;
+        let content = "";
+        $.each(list, function (i, obj) {
+
+            let mark = "";
+            if (obj.glabel === 1) {
+                mark = "new";
+            } else if (obj.glabel === 2) {
+                mark = "hot";
+            } else if (obj.glabel === 3) {
+                mark = "sale";
+            }
+
+            content += "<div class='product grid-item " + mark + "'>" +
+                "<div class='product_inner'>" +
+                "<a style='cursor: pointer' onclick='queryGoodsDetail(" + obj.gid + ")'>" +
+                "<div class='product_image'>" +
+                "   <img src='" + obj.gimage + "' alt=''>" +
+                "<div class='product_tag'>" + mark + "</div>" +
+                "</div>" +
+                "<div class='product_content text-center'>" +
+                "<div class='product_title'>" +
+                "<a href=''>" + obj.gname + "</a></div>" +
+                "<div class='product_price'>¥" + obj.gprice + "</div>" +
+                "<div class='product_button ml-auto mr-auto trans_200'>" +
+                "<a href='javascript:;' class='addshopcar' onclick='addCart("+obj.gid+")'   data-gid='" + obj.gid + "'>添加到购物车</a>" +
+                "</div></div></div></div>";
+        })
+        $("#goodlist_div").append(content);
+
+    }
 
 
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.qmall.apple.dao.ShopOrderMapper">
 
 
-    <select id="selectByPrimaryKey_With_Detail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey_With_Detail" parameterType="java.lang.String" resultMap="BaseResultMap_With_Detail">
         SELECT * FROM `shop_order`
         LEFT JOIN `shop_order_detail` ON shop_order.`oid` = shop_order_detail.`oid`
         LEFT JOIN `shop_goods` g ON g.`gid` = shop_order_detail.`gid`
@@ -11,7 +11,7 @@
     </select>
 
 
-    <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
+    <resultMap id="BaseResultMap_With_Detail" type="com.qmall.apple.bean.ShopOrder">
         <id column="oid" jdbcType="VARCHAR" property="oid" />
         <result column="aid" jdbcType="INTEGER" property="aid" />
         <result column="addressId" jdbcType="INTEGER" property="addressid" />
@@ -45,7 +45,7 @@
 
 
 
- <!-- <resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
+<resultMap id="BaseResultMap" type="com.qmall.apple.bean.ShopOrder">
     <id column="oid" jdbcType="VARCHAR" property="oid" />
     <result column="aid" jdbcType="INTEGER" property="aid" />
     <result column="addressId" jdbcType="INTEGER" property="addressid" />
@@ -53,7 +53,7 @@
     <result column="odate" jdbcType="TIMESTAMP" property="odate" />
     <result column="ototal" jdbcType="REAL" property="ototal" />
     <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
-  </resultMap>-->
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
