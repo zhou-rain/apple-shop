@@ -30,7 +30,7 @@ const serverUrl ="http://localhost:8081"; //本地;
 
 //ajax请求
 function getJSON(url,param,callFun){
-    param.userId=1;
+    param.userId = sessionStorage.getItem("userId");
 	$.ajax({
         url : serverUrl+url,
         type : 'POST',

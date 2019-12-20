@@ -137,6 +137,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	public String paySuccess(String orderId) {
+
 		ShopOrder entity = new ShopOrder();
 		entity.setOstatus(SaleConstants.ORDER_STATUS_PAY);
 		entity.setOid(orderId);
@@ -184,6 +185,7 @@ public class OrderServiceImpl implements OrderService {
 		ShopOrderExample example = new ShopOrderExample();
 		ShopOrderExample.Criteria criteria = example.createCriteria();
 		criteria.andAidEqualTo(userId);
+		example.setOrderByClause("ostatus asc,odate desc");
 
 		PageHelper.startPage(pageNum,pageSize);
 		return shopOrderMapper.selectByExample(example);

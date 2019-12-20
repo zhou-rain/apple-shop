@@ -1,6 +1,7 @@
 package com.qmall.apple.sale.timer;
 
 import com.qmall.apple.sale.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 

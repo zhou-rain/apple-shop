@@ -12,9 +12,7 @@ public class SaleConstants {
 
 	public static final String TIMER_MAP = "timerMap";		//订单定时器
 
-
-	public static final Long TIME_30M = 1000*60L*30;	//30分钟 单位：毫秒
-	public static final Long TIME_20S = 1000*20L;		//20秒 单位：毫秒
+	public static final Long ORDER_OUT_TIME = 1000*60L;	//订单失效时间1分钟  单位：毫秒
 
 
 	//商品删除标志  0:可用 1:删除

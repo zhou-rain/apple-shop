@@ -1,74 +1,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>注册</title>
     <link href="assets/login/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="assets/login/font-awesome.min.css" type="text/javascript" rel="stylesheet">
     <link href="assets/login/bootsnav.css" type="text/css" rel="stylesheet">
     <link href="assets/login/normalize.css" type="text/css" rel="stylesheet">
     <link href="assets/login/css.css" rel="stylesheet" type="text/css">
     <script src="assets/login/jquery-1.11.0.min.js" type="text/javascript"></script>
     <script src="assets/login/bootstrap.min.js" type="text/javascript"></script>
     <script src="assets/login/bootsnav.js" type="text/javascript"></script>
-<style type="text/css">
-	
-	label{
-		color:red;
-		font-size:20px;
-	}
+    <style type="text/css">
 
-</style>
+        label {
+            color: red;
+            font-size: 20px;
+        }
+
+    </style>
+
 </head>
 
 
 <body class="logobg_style">
+
 <div id="large-header" class="large-header login-page" style="height: 445px;">
     <canvas id="demo-canvas" width="1440" height="445"></canvas>
     <div class="login-form">
         <div class="login-content">
-            <h1 class="title_name">用户登录</h1>
-            <form method="post" role="form" id="form_login" class="login_padding">
+            <h1 class="title_name">用户注册</h1>
+            <form method="post" role="form" id="form_regist" class="login_padding">
                 <div class="form-group clearfix">
-
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="icon_user"></i>
                         </div>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="用户名" autocomplete="off">
+                        <input type="text" class="form-control" name="username" id="username" placeholder="用户名"
+                               autocomplete="off">
                     </div>
-
                 </div>
 
                 <div class="form-group clearfix">
-
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="icon_password"></i>
                         </div>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="密码" autocomplete="off">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="密码"
+                               autocomplete="off">
+
                     </div>
                 </div>
-                <span class='help-block text-left' style='color:#ff848a;font-size:14px' id="msg"></span>
 
 
-                <div style="display: flex;justify-content: space-between">
-                    <a href="regist.html" class="forget">还没账号？</a>
-                    <a href="" class="forget">忘记密码？</a>
+                <div class="form-group clearfix">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="icon_password"></i>
+                        </div>
+                        <input type="password" class="form-control" name="repass" placeholder="重复密码" autocomplete="off">
+                    </div>
+
                 </div>
 
-
+                <div class="textright">
+                    <a href="login.html" class="forget">有账号了？</a>
+                </div>
 
                 <div class="tishi"></div>
                 <div class="form-group">
-                    <a href="javascript:;"  class="btn btn-danger btn-block btn-login" onclick="cliLogin()">
-                        <i class="fa fa-sign-in"></i> 登录
+                    <a href="javascript:;" class="btn btn-danger btn-block btn-login" onclick="cliRegist()">
+                        <i class="fa fa-sign-in"></i> 注册
                     </a>
                 </div>
 
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 
 <script src="assets/login/TweenLite.min.js"></script>
@@ -79,26 +86,26 @@
 
 <script>
 
-    function cliLogin() {
-        $("#form_login").submit();
+    function cliRegist() {
+        $("#form_regist").submit();
     }
 
     //校验表单
-    $("#form_login").validate({
+    $("#form_regist").validate({
         submitHandler: function () {
 
-            let param = $("#form_login").serialize();
-            getJSON("/cunstomer/login", param, function (result) {
-                console.log(result);
-                let entity = result.extend.entity;
-                let code = result.code;
-                if(code===100){
-                    sessionStorage.setItem("userId",entity.aid);
-                    sessionStorage.setItem("username",entity.aname);
-                    window.location.href="index.html";
-                }else {
-                    $("#msg").empty().text("账号密码有误！");
+            let param = $("#form_regist").serialize();
+            getJSON("/cunstomer/regist", param, function (result) {
+                let ret = result.extend.ret;
+                if (ret === "ok") {
+                    alert("处理成功！");
+                    location.href = "login.html"
+                } else if (ret === "more") {
+                    alert("用户名已存在")
+                } else {
+                    alert("系统异常，请刷新或联系管理员！")
                 }
+
             })
 
 
@@ -121,6 +128,10 @@
                 required: true,
                 maxlength: 16,
                 minlength:6
+            },
+            repass: {
+                required: true,
+                equalTo: "#password"
             }
         },
         messages: {
@@ -133,12 +144,18 @@
                 required: "请输入密码",
                 maxlength: "密码不能超出16个字符",
                 minlength: "密码不能少于3个字符"
+            },
+            repass: {
+                required: "请输入确认密码",
+                equalTo: "两次输入的密码不一致"
             }
         }
     });
 
 
 </script>
+
 </body>
+
 
 </html>

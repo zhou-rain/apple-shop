@@ -58,7 +58,7 @@
 			<div class="section_container">
 				<div class="container">
 					<div class="row" id="time_div">
-                        <h3>倒计时:距离支付还剩 <label id="showtime"></label></h3>
+                        <h3 id="showtime"></h3>
 					</div>
                     <div class="row">
                         <button class="btn btn-info" onclick="javascript:history.go(-1)">&lt;&lt;返回</button>
@@ -143,8 +143,6 @@
     $(function () {
 
 
-
-
         //支付页面
         if (getUrlParam("status") == "pay") {
             let content = ` <div class="checkout_button trans_200" id="pay_btn">
@@ -168,7 +166,7 @@
 
                     str = date.getMinutes() + ":" + (date.getSeconds()<10 ? '0'+date.getSeconds() : date.getSeconds());
 
-                    $("#showtime").text(str);
+                    $("#showtime").text("倒计时:距离支付还剩:"+str);
                     
                     console.log(str);
                     if(str=="0:00"){
@@ -178,9 +176,8 @@
 
                 }, 1000);
 
-            })
-
-
+            });
+            
 
 
         //查看订单页面
@@ -224,6 +221,8 @@
         $("#all_price").html("¥"+result.extend.entity.ototal);
         $("#total").html("¥"+(result.extend.entity.ototal+12));
     }
+
+
 
     $(document).on("click","#pay_btn",function () {
         let param = {};

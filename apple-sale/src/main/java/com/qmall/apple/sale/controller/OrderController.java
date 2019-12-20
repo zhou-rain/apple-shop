@@ -33,6 +33,7 @@ import java.util.Timer;
 @CrossOrigin(origins = {"http://localhost:63343", "http://localhost:63342"})
 public class OrderController {
 
+
 	@Autowired
 	OrderService orderService;
 
@@ -46,7 +47,7 @@ public class OrderController {
 		Date odate = shopOrder.getOdate();
 
 		long startToNow = DateTimeUtil.betweenMillis(odate);  //毫秒
-		long limitTime = SaleConstants.TIME_30M - startToNow;	//拿30分钟减去
+		long limitTime = SaleConstants.ORDER_OUT_TIME - startToNow;	//拿总失效时间相减
 		return Msg.success().add("limitTime",limitTime);
 	}
 
@@ -62,19 +63,15 @@ public class OrderController {
 
 		String orderId = orderService.creatOrder(ids, userId);
 
-		//设置一个订单超时的时间点;30分钟后订单自动关闭
-		//1: 订单创建成功以后,设置一个计时器;计时器30分钟;
-		//2: 30分钟以后,订单失效; 就是修改订单的状态为 4; 就代表当前定时已经失效了;
-		//3: 如果用户在指定的时间内支付成功;必须要取消这个计时器;
+		//3分钟后订单自动关闭
 		Timer timer = new Timer();
 		OrderTimer orderTimer = new OrderTimer(timer,orderId);
 
-		//执行任务; 创建订单成功以后,.30秒以后将订单设置为失效
-		timer.schedule(orderTimer,30*60*1000); // 30*60*1000
+		//执行任务; 创建订单成功以后,.3分钟后将订单设置为失效
+		timer.schedule(orderTimer,SaleConstants.ORDER_OUT_TIME);
 		//将定时器放在map中
 		Map<String,Timer> map = (Map<String,Timer>)session.getServletContext().getAttribute(SaleConstants.TIMER_MAP);
 		map.put(orderId,timer);
-
 
 		return Msg.success().add("ret", orderId);
 	}
