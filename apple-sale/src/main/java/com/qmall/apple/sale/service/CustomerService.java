@@ -11,4 +11,6 @@ public interface CustomerService {
 	ShopCustomer login(String username, String password);
 
 	String regist(String username, String password);
+
+	String repass(int userId, String password);
 }

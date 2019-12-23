@@ -1,6 +1,9 @@
+import com.qmall.apple.commons.DateTimeUtil;
 import com.qmall.apple.commons.WebUtil;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -25,7 +28,20 @@ public class test {
 	 * function:
 	 */
 	@Test
+	public void test5(){
+		int periodDays = DateTimeUtil.periodDays(DateTimeUtil.DateToLocalDate(new Date()), LocalDate.now().plusDays(60));
+		System.out.println("periodDays = " + periodDays);
+	}
+
+	/**
+	 * function:
+	 */
+	@Test
 	public void tes1t(){
 		System.out.println(UUID.randomUUID().toString().length());
 	}
+
+
+
+
 }

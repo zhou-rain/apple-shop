@@ -8,14 +8,15 @@ import java.util.Map;
  * @Date: Create in 17:36 2019/8/16
  */
 public class Msg {
+
 	//状态码 100-成功  200-失败
 	private int code;
 	//提示信息
 	private String msg;
-
-	//返回给浏览器的数据
+	//返回的数据
 	private Map<String, Object> extend = new HashMap<>();
 
+	//成功
 	public static Msg success() {
 		Msg msg = new Msg();
 		msg.setCode(100);
@@ -23,6 +24,7 @@ public class Msg {
 		return msg;
 	}
 
+	//失败
 	public static Msg fail() {
 		Msg msg = new Msg();
 		msg.setCode(200);

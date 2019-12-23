@@ -1,5 +1,8 @@
 <!DOCTYPE html>
+
 <script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
+<script src="plugins/greensock/TweenMax.min.js"></script>
 <div class="sidebar">
 
 	<!-- Info -->
@@ -16,12 +19,6 @@
 				</div>
 
 				<div class="dropdown_text" id="welcome">
-				<!--<c:if test="${not empty user}">
-					欢迎你 ${user.uname}
-				</c:if>
-				<c:if test="${empty user}">
-					<a href="login.html">请登录</a>
-				</c:if>-->
 
 				</div>
 
@@ -36,10 +33,10 @@
 
 				<!-- Currencies Dropdown Menu -->
 				<ul>
-					<li style="width: 45px;"><a href="shopcart.html"><div
+					<li style="width: 45px;" id="cart"><a href="javascript:;"><div
 								class="dropdown_text">购物车</div></a></li>
-					<li><a href="myorder.html"><div class="dropdown_text">订单</div></a></li>
-					<li><a href="#"><div class="dropdown_text">个人</div></a></li>
+					<li id="order"><a href="javascript:;"><div class="dropdown_text">订单</div></a></li>
+					<li id="userInfo"><a href="javascript:;"><div class="dropdown_text">个人</div></a></li>
 					<li id="logOut"><a href="javascript:;"><div class="dropdown_text">注销</div></a></li>
 				</ul>
 
@@ -87,8 +84,8 @@
 	<!-- Cart -->
 	<div
 		class="cart d-flex flex-row align-items-center justify-content-start">
-		<div class="cart_icon">
-			<a href="shopcart.html"> <img src="images/bag.png" alt="">
+		<div class="cart_icon" id="cart_logo">
+			<a href="javascript:;"> <img src="images/bag.png" alt="">
 				<div id="cart_num" class="cart_num">0</div>
 			</a>
 		</div>
@@ -98,7 +95,165 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">个人信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="username">用户名</label>
+                        <span class="input-group-text" id="username"></span>
+                    </div>
+                    <div class="form-group" style="display:none" id="password_div">
+                        <label for="password">密码</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    <div class="form-group" style="display:none" id="repass_div">
+                        <label for="password">重复密码</label>
+                        <input type="password" class="form-control" name="repass" id="repass">
+                    </div>
+                    <div class="input-group mb-3" id="cart_div">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">购物车金额：</span>
+                            <span class="input-group-text" id="cartMoney">￥00.0</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-default xxmm" id="xgmm">修改密码</button>
+                <button type="button" class="btn btn-primary" id="bc" style="display: none;">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 <script>
+
+
+    //点击保存
+    $(document).on("click","#bc",function () {
+        if($("#password").val()==null){
+            alert("密码不能为空！");
+            return;
+        }
+        if($("#password").val().length<6){
+            alert("密码长度不能少于六位！");
+            return;
+        }
+        if($("#password").val()!=$("#repass").val()){
+            alert("两次密码不一致");
+            return;
+        }
+        let param = $("#user_modal form").serialize();
+        param+="&userId="+sessionStorage.getItem("userId");
+        $.ajax({
+            url:"/cunstomer/repass",
+            type: "POST",
+            data:param,
+            success:function (result) {
+                let ret = result.extend.ret;
+                if(ret==="ok"){
+                    alert("修改成功！");
+                    sessionStorage.clear();
+                    window.location.href="login.html";
+                }else {
+                    alert("系统异常！请刷新或联系管理员！");
+                }
+            }
+        })
+    });
+
+    //点击订单
+    $("#order").click(function () {
+        let username = sessionStorage.getItem("username");
+        if(username== null){
+            if(confirm("还没登录，要去登录吗？")){
+                window.location.href="login.html";
+            }
+        }else {
+            window.location.href="myorder.html";
+        }
+    });
+    //点击购物车
+    $("#cart,#cart_logo").click(function () {
+        let username = sessionStorage.getItem("username");
+        if(username== null){
+            if(confirm("还没登录，要去登录吗？")){
+                window.location.href="login.html";
+            }
+        }else {
+            window.location.href="shopcart.html";
+        }
+    });
+
+
+
+
+
+    //点击个人信息
+    $("#userInfo").click(function () {
+
+        let username = sessionStorage.getItem("username");
+        if(username== null){
+            if(confirm("还没登录，要去登录吗？")){
+                window.location.href="login.html";
+            }
+        }
+
+
+        $("#repass_div").hide();
+        $("#password_div").hide();
+        $("#cart_div").show();
+        $("#xgmm").html("修改密码");
+        $("#xgmm").removeClass("qx").addClass("xxmm");
+
+        $("#username").text(sessionStorage.getItem("username"));
+
+
+        $("#user_modal").modal();
+    });
+
+    //点击修改密码
+    $(document).on("click",".xxmm",function () {
+        $("#repass_div").show();
+        $("#password_div").show();
+        $("#cart_div").hide();
+        $("#xgmm").html("取消");
+        $(".xxmm").removeClass("xxmm").addClass("qx")
+        $("#bc").show();
+
+    });
+
+    //点击取消
+    $(document).on("click",".qx",function () {
+        $("#repass_div").hide();
+        $("#password_div").hide();
+        $("#cart_div").show();
+        $("#xgmm").html("修改密码");
+        $(".qx").removeClass("qx").addClass("xxmm")
+        $("#bc").hide();
+    });
+
+    $("#logOut").click(function () {
+        if(confirm("确定退出登录吗？")){
+            sessionStorage.clear();
+            window.location.href="index.html";
+        }
+    });
 
     $(function () {
         let content = ``;
@@ -109,14 +264,6 @@
             content=`${username}`;
         }
         $("#welcome").append(content);
-    })
-
-
-    $("#logOut").click(function () {
-        if(confirm("确定退出登录吗？")){
-            sessionStorage.clear();
-            window.history.go(0);
-        }
     })
 
 </script>

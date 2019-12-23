@@ -7,6 +7,7 @@ function load_cart() {
     getJSON("/cart/query", {}, function (result) {
         $("#cart_num").html(result.extend.calc.totalCount);
         $("#cart_price").html("¥" + result.extend.calc.totalMoney);
+        $("#cartMoney").html("¥" + result.extend.calc.totalMoney);
     })
 }
 

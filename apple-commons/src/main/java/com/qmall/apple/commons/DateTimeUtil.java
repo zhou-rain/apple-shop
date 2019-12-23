@@ -241,6 +241,17 @@ public class DateTimeUtil {
 		return instant.atZone(zoneId).toLocalDateTime();
 	}
 
+	/**
+	 * Date 转成 LocalDate
+	 * @param date
+	 * @return
+	 */
+	public static LocalDate DateToLocalDate(Date date){
+		Instant instant = date.toInstant();
+		ZoneId zoneId = ZoneId.systemDefault();
+		return instant.atZone(zoneId).toLocalDate();
+	}
+
 
 	/**
 	 * LocalDateTime 转成 Date

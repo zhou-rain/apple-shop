@@ -23,6 +23,14 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 
+	@RequestMapping("/repass")
+	public Msg repass(HttpServletRequest request){
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+		String ret = customerService.repass(Integer.parseInt(userId),password);
+		return Msg.success().add("ret",ret);
+	}
+
 	@RequestMapping("/login")
 	public Msg login(HttpServletRequest request){
 		String username = request.getParameter("username");

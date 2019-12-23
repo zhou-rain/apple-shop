@@ -29,5 +29,8 @@ public interface ShopOrderMapper {
 
     int updateByPrimaryKey(ShopOrder record);
 
+
+
+
 	ShopOrder selectByPrimaryKey_With_Detail(String oid);
 }

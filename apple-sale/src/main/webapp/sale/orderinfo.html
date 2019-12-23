@@ -234,6 +234,9 @@
                 window.location.href="myorder.html";
             }else if(ret==="empty"){
                 alert("数据为空")
+            }else if(ret==="timeout"){
+                alert("订单已失效！操作失败！")
+                window.location.href="myorder.html";
             }else {
                 alert("系统异常，请刷新或联系管理员！")
             }

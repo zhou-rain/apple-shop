@@ -133,13 +133,19 @@
             <div class="product_price">¥${entity.gprice * entity.gdiscount}</div>
             <div class="product_color">类别: <span>${entity.goodsType.tname}</span></div>
 
-            <button class="cart_button trans_200">添加到购物车</button>
-            <div class="similar_products_button trans_200"><a href="categories.html">快速购买</a></div>
+            <div class="similar_products_button trans_200" onclick="addCart(${entity.gid})"><a href="javascript:;">添加到购物车</a></div>
         `;
         $("#product_form").append(content);
 
          let imgcontent=`
             <div class="carousel-item active">
+                <img src="${entity.gimage}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>${isEmpty(entity.goodsType.tdesc)?"":entity.goodsType.tdesc}</h5>
+                    <p>${isEmpty(entity.gdesc)?"":entity.gdesc}</p>
+                </div>
+            </div>
+             <div class="carousel-item active">
                 <img src="${entity.gimage}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>${isEmpty(entity.goodsType.tdesc)?"":entity.goodsType.tdesc}</h5>

@@ -37,20 +37,34 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public String regist(String username, String password) {
-		ShopCustomer shopCustomer = new ShopCustomer();
-		shopCustomer.setAname(username);
-		shopCustomer.setApass(password);
+		ShopCustomer entity = new ShopCustomer();
+		entity.setAname(username);
+		entity.setApass(password);
 
-		if(!isEmpty(shopCustomer)){
+		if(!isEmpty(entity)){
 			return "more";
 		}
 		try {
-			shopCustomerMapper.insertSelective(shopCustomer);
+			shopCustomerMapper.insertSelective(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "err";
 		}
 
+		return "ok";
+	}
+
+	@Override
+	public String repass(int userId, String password) {
+		ShopCustomer entity = new ShopCustomer();
+		entity.setAid(userId);
+		entity.setApass(password);
+		try {
+			shopCustomerMapper.updateByPrimaryKeySelective(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "err";
+		}
 		return "ok";
 	}
 

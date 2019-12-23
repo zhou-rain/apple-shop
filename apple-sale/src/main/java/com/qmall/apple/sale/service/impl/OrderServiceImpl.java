@@ -138,15 +138,30 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public String paySuccess(String orderId) {
 
-		ShopOrder entity = new ShopOrder();
-		entity.setOstatus(SaleConstants.ORDER_STATUS_PAY);
-		entity.setOid(orderId);
+		//验证订单超时
 		try {
-			shopOrderMapper.updateByPrimaryKeySelective(entity);
+			ShopOrder order = shopOrderMapper.selectByPrimaryKey(orderId);
+
+			if(order==null){
+				return "empty";
+			}
+
+			//判断订单状态
+			if (order.getOstatus().equals(SaleConstants.ORDER_STATUS_NOTPAY)) {
+				//还未支付，可支付
+				ShopOrder entity = new ShopOrder();
+				entity.setOstatus(SaleConstants.ORDER_STATUS_PAY);
+				entity.setOid(orderId);
+				shopOrderMapper.updateByPrimaryKeySelective(entity);
+			}else {
+				return "timeout";
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "err";
 		}
+
 		return "ok";
 	}
 
@@ -169,6 +184,8 @@ public class OrderServiceImpl implements OrderService {
 		return "ok";
 	}
 
+	
+
 
 	/**
 	 * 订单列表
@@ -190,4 +207,11 @@ public class OrderServiceImpl implements OrderService {
 		PageHelper.startPage(pageNum,pageSize);
 		return shopOrderMapper.selectByExample(example);
 	}
+
+
+
+	
+	
+	
+	
 }

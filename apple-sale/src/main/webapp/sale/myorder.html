@@ -37,44 +37,56 @@
 
     </div>
 
-<div class="section_container">
 
 
+        <div class="home">
+            <div class="parallax_background parallax-window"
+                 data-parallax="scroll" data-image-src="images/blog.jpg"
+                 data-speed="0.8"></div>
+            <div class="home_container">
+                <div class="home_content">
+                    <div class="home_title">我的订单</div>
+                </div>
+            </div>
+        </div>
         <!-- Cart Bar -->
+        <div class="blog">
+                <div class="container">
+                    <div class="section_container">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">订单号</th>
+                            <th scope="col">创建时间</th>
+                            <th scope="col">金额</th>
+                            <th scope="col">状态</th>
+                            <th scope="col" width="20%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
 
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">订单号</th>
-                <th scope="col">创建时间</th>
-                <th scope="col">金额</th>
-                <th scope="col">状态</th>
-                <th scope="col">操作</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+            </div>
+        </div>
 
-</div>
+    </div>
 
-</div>
+    <script src="styles/bootstrap-4.1.3/popper.js"></script>
+    <script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
+    <script src="plugins/greensock/TweenMax.min.js"></script>
+    <script src="plugins/greensock/TimelineMax.min.js"></script>
+    <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="plugins/greensock/animation.gsap.min.js"></script>
+    <script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="plugins/parallax-js-master/parallax.min.js"></script>
 
-<script src="styles/bootstrap-4.1.3/popper.js"></script>
-<script src="styles/bootstrap-4.1.3/bootstrap.min.js"></script>
-<script src="plugins/greensock/TweenMax.min.js"></script>
-<script src="plugins/greensock/TimelineMax.min.js"></script>
-<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="plugins/greensock/animation.gsap.min.js"></script>
-<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-
-<script src="zhouranJS/common.js"></script>
-<script src="zhouranJS/ajax.js"></script>
-<script src="js/shopcar.js"></script>
-<script src="zhouranJS/calculator.js"></script>
+    <script src="zhouranJS/common.js"></script>
+    <script src="zhouranJS/ajax.js"></script>
+    <script src="js/shopcar.js"></script>
+    <script src="zhouranJS/calculator.js"></script>
 </body>
 
 <script>
@@ -84,6 +96,7 @@
         param.pageSize = 20;
         param.pageNum = 1;
         getJSON("/order/list", param, callback_list);
+
         function callback_list(result) {
             console.log(result);
             //构建表格
@@ -99,19 +112,19 @@
 
             let ststus = "";
             let btn = "";
-            if(obj.ostatus===1){
-                ststus='<span style="color: red">待支付</span>';
-                btn=`<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
-                btn+=`<div class="btn btn-sm btn-danger" data-id='${obj.oid}'>去支付</div>`
-            }else if(obj.ostatus===2){
-                ststus='<span style="color: #0B58A8">已支付</span>';
-                btn=`<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
-            } else if(obj.ostatus===3){
-                ststus='<span style="color: #39de21;">已发货</span>';
-                btn=`<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
-            } else if(obj.ostatus===4){
-                ststus='超时失效';
-                btn=`<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
+            if (obj.ostatus === 1) {
+                ststus = '<span style="color: red">待支付</span>';
+                btn = `<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>&nbsp;&nbsp;`;
+                btn += `<div class="btn btn-sm btn-danger" data-id='${obj.oid}'>去支付</div>`
+            } else if (obj.ostatus === 2) {
+                ststus = '<span style="color: #0B58A8">已支付</span>';
+                btn = `<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
+            } else if (obj.ostatus === 3) {
+                ststus = '<span style="color: #39de21;">已发货</span>';
+                btn = `<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
+            } else if (obj.ostatus === 4) {
+                ststus = '超时失效';
+                btn = `<div class="btn btn-sm btn-info" data-id='${obj.oid}'>查看订单</div>`;
             }
 
 
@@ -129,18 +142,16 @@
     }
 
     //查看订单
-    $(document).on("click",".btn-info",function () {
+    $(document).on("click", ".btn-info", function () {
         let id = $(this).data("id"); //订单id
-        window.location.href="orderinfo.html?orderId="+id+"&status=see";
+        window.location.href = "orderinfo.html?orderId=" + id + "&status=see";
     });
 
     //去支付
-    $(document).on("click",".btn-danger",function () {
+    $(document).on("click", ".btn-danger", function () {
         let id = $(this).data("id"); //订单id
-        window.location.href="orderinfo.html?orderId="+id+"&status=pay";
+        window.location.href = "orderinfo.html?orderId=" + id + "&status=pay";
     });
-
-
 
 
 </script>
