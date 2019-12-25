@@ -91,7 +91,7 @@ function isInArray(arr,value){
 function recorePageNum(pageNum) {
     sessionStorage.setItem("pageNum",pageNum);
 }
-//修改回调函数时使用
+//修改 回调函数时使用
 function getPageNum() {
     return sessionStorage.getItem("pageNum");
 }
@@ -111,7 +111,7 @@ function isNotEmpty(obj){
             break;
     }
     if(result){
-        if(obj.replace(/\s+/g,"") == ""){//空字符串校验
+        if(obj.replace(/\s+/g,"") === ""){//空字符串校验
             result = false;
         }
     }
@@ -123,7 +123,20 @@ function isEmpty(obj) {
 }
 
 
+/**
+ * 将字符串加密
+ */
+function encodeStr(str) {
+    return window.encodeURIComponent(str);
+}
 
+
+/**
+ * 字符串解密
+ */
+function decodeStr(str) {
+    return window.decodeURIComponent(str);
+}
 
 
 

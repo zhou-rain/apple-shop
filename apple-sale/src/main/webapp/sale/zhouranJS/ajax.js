@@ -23,10 +23,10 @@ let ajaxData ={
 };
 
 
-//服务器地址
-const serverUrl ="http://localhost:8081"; //本地;
-//const serverUrl ='';  //服务器地址
 
+//服务器地址
+//const serverUrl ="http://localhost:8081"; //本地;
+const serverUrl ="/apple-sale"; //服务器地址
 
 //ajax请求
 function getJSON(url,param,callFun){

@@ -3,10 +3,13 @@ package com.qmall.apple.manager.service.impl;
 import Constants.AdminConstants;
 import com.github.pagehelper.PageHelper;
 import com.qmall.apple.Entity.ShopRoleEntity;
-import com.qmall.apple.bean.ShopAdminExample;
-import com.qmall.apple.bean.ShopRoleExample;
+import com.qmall.apple.bean.*;
+import com.qmall.apple.commons.ArrayUtil;
 import com.qmall.apple.commons.Validator;
 import com.qmall.apple.commons.WebUtil;
+import com.qmall.apple.dao.ShopAdminRoleMapper;
+import com.qmall.apple.dao.ShopAuthMapper;
+import com.qmall.apple.dao.ShopRoleAuthMapper;
 import com.qmall.apple.dao.ShopRoleMapper;
 import com.qmall.apple.manager.service.ShopRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,10 @@ public class ShopRoleServiceImpl implements ShopRoleService {
 
 	@Autowired
 	ShopRoleMapper shopRoleMapper;
+	@Autowired
+	ShopAdminRoleMapper shopAdminRoleMapper;
+	@Autowired
+	ShopRoleAuthMapper shopRoleAuthMapper;
 
 
 	@Override
@@ -53,5 +60,41 @@ public class ShopRoleServiceImpl implements ShopRoleService {
 	@Override
 	public List<ShopRoleEntity> getAllRoleList() {
 		return shopRoleMapper.selectByExample(null);
+	}
+
+	/**
+	 * 删除角色
+	 * @param ids
+	 * @return
+	 */
+	@Override
+	public String delBatch(String ids) {
+		List<Integer> idlist = ArrayUtil.StringToIntegerList(ids);
+
+		try {
+			//删除角色权限表
+			ShopAdminRoleExample shopAdminRoleExample = new ShopAdminRoleExample();
+			ShopAdminRoleExample.Criteria criteria1 = shopAdminRoleExample.createCriteria();
+			criteria1.andRidIn(idlist);
+			shopAdminRoleMapper.deleteByExample(shopAdminRoleExample);
+
+			//删除角色用户表
+			ShopRoleAuthExample shopRoleAuthExample = new ShopRoleAuthExample();
+			ShopRoleAuthExample.Criteria criteria2 = shopRoleAuthExample.createCriteria();
+			criteria2.andRidIn(idlist);
+			shopRoleAuthMapper.deleteByExample(shopRoleAuthExample);
+
+			//删除角色
+			ShopRoleExample shopRoleExample = new ShopRoleExample();
+			ShopRoleExample.Criteria criteria3 = shopRoleExample.createCriteria();
+			criteria3.andRidIn(idlist);
+			shopRoleMapper.deleteByExample(shopRoleExample);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "err";
+		}
+
+
+		return "ok";
 	}
 }

@@ -14,7 +14,7 @@ $(function () {
 let search_form = "#search_form";
 //带条件翻页
 function toPage(pageNum) {
-    recorePageNum(pageNum);
+    //recorePageNum(pageNum); //记录当前页  供更新操作的回调函数使用
     queryParam.pageSize = pageSize;
     queryParam.pageNum = pageNum;
 
@@ -22,6 +22,8 @@ function toPage(pageNum) {
     let result = Object.assign(queryParam, search_form_param);
     getJSON(queryUrl, result, callback_toPage);
 }
+
+
 
 function callback_toPage(result) {
     console.log(result);
@@ -45,11 +47,10 @@ function callback_toPage(result) {
     if (pageInfo.total > pageSize) {
         initTFoot(pageInfo);
     }
-
 }
 
 
-//构建底部导航条
+//构建底部导航条 bootstrap4.0
 function initTFoot(pageinfo) {
     let str = '';
     if(pageinfo.hasPreviousPage === false){
@@ -76,7 +77,7 @@ function initTFoot(pageinfo) {
     $(".page").append(str);
 }
 
-//构建导航条
+//构建导航条 bootstrap3.0
 function build_nav(result) {
     $("#navBar").empty();
     const pageinfo = result.extend.pageInfo;

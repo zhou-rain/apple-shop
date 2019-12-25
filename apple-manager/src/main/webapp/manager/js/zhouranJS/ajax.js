@@ -34,8 +34,8 @@ let ajaxData ={
 
 
 //服务器地址
-const serverUrl ="http://localhost:8080/manager"; //本地;
-//const serverUrl ='';  //服务器地址
+//const serverUrl ="http://localhost:8080/manager"; //本地;
+const serverUrl ="/apple-manager"; //服务器地址
 
 
 //ajax请求

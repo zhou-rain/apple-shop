@@ -14,4 +14,6 @@ public interface ShopRoleService {
 	List<ShopRoleEntity> list(Map<String, Object> param);
 
 	List<ShopRoleEntity> getAllRoleList();
+
+	String delBatch(String ids);
 }

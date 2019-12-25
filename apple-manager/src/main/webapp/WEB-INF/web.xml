@@ -24,23 +24,24 @@
 
 
     <!--ajax请求拦截器-->
-   <filter>
+   <!--<filter>
         <filter-name>AjaxFilter</filter-name>
         <filter-class>com.qmall.apple.manager.filter.AjaxFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AjaxFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
+
     <!--权限拦截器-->
-  <filter>
+  <!--<filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.qmall.apple.manager.filter.AuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
 	<servlet>
 		<servlet-name>spring_Dispatcher</servlet-name>
