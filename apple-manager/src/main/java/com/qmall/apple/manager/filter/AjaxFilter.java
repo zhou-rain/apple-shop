@@ -2,7 +2,7 @@ package com.qmall.apple.manager.filter;
 
 import Constants.AdminConstants;
 import com.qmall.apple.Entity.ShopAdminEntity;
-import com.qmall.apple.commons.Validator;
+import com.qmall.apple.utils.Validator;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

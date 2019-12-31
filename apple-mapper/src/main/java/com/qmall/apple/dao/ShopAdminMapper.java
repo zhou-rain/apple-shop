@@ -6,6 +6,7 @@ import com.qmall.apple.bean.ShopAdminExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ShopAdminMapper {
     long countByExample(ShopAdminExample example);
@@ -19,6 +20,8 @@ public interface ShopAdminMapper {
     int insertSelective(ShopAdmin record);
 
     List<ShopAdminEntity> selectByExample(ShopAdminExample example);
+
+    List<ShopAdmin> selectByExample_Bean(ShopAdminExample example);
 
 	ShopAdminEntity selectByPrimaryKey(Integer aid);
 
@@ -34,9 +37,8 @@ public interface ShopAdminMapper {
 
 	ShopAdminEntity selectPrimaryKey_With_Role_Auth(int aid);
 
-
-
-
 	ShopAdmin selectByPrimaryKey_ReturnBean(Integer aid);
 
+
+	Set<String> getRolesByAccount(String account);
 }

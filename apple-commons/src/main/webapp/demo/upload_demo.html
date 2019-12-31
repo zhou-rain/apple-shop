@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传示例</title>
+</head>
+<body>
+
+<!--
+    图片上传
+    图片回显
+    以及后台处理判断
+-->
+
+
+<label>上传图片</label>
+<input type="button" value="浏览..." onclick="$('#uimg').click();return false;"/>
+<input type="file" name="upload_file" id="uimg" style="display: inline-block;width: 0;height: 1px;font-size: 0;margin:0;padding: 0;opacity: 0.1;"/>
+<img class="preview" style="height: 100px;	width: 100px;">
+
+
+
+<script>
+
+
+    //预览图片
+    $("#uimg").change(function () {
+        let objUrl = $(this)[0].files[0];
+        //获得一个http格式的url路径:mozilla(firefox)||webkit or chrome
+        let windowURL = window.URL || window.webkitURL;
+        //createObjectURL创建一个指向该参数对象(图片)的URL
+        let dataURL = windowURL.createObjectURL(objUrl);
+        $(".preview").attr("src", dataURL);
+    });
+
+    //点击保存
+    $("#save_btn").click(function() {
+
+        if($("#uimg").val()==null ||$("#uimg").val()==""){
+            alert("请上传图片");
+            return;
+        }
+
+        //文件上传
+        saveFile("/save",$("#bookModal form"),{},function(result){
+            if(result.extend.ret==="ok"){
+                alert("保存成功！");
+            }else if(result.extend.ret==="more"){
+                alert("书名重复");
+            }else if(result.extend.ret==="err"){
+                alert("系统异常，请刷新或联系管理员！");
+            }
+        });
+    });
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
+
+
+
+<!--
+/**
+	 * 保存-更新
+
+	 upload_file这个名字要对应form表单的name值
+
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping("/save")
+	public Msg save(@RequestParam Map<String, Object> param, MultipartFile upload_file, HttpServletRequest request) {
+		String id = WebUtil.getParam(param, "id");
+		String name = WebUtil.getParam(param, "name");
+		String price = WebUtil.getParam(param, "price");
+
+		Float bprice = calcUtil.StringToFloat(price);
+
+		Book entity = new Book();
+		if (Validator.isNotEmpty(id)) {
+			entity = bookservice.getEntityById(Integer.parseInt(id));
+			entity.setId(Integer.parseInt(id));
+		}
+
+		entity.setName(name);
+		entity.setPrice(bprice);
+		//设置图片
+		if(upload_file.getSize()>0){
+			String imgpath = FileUtil.fileUpLoad(upload_file,request,"/images");
+			entity.setImage(imgpath);
+		}
+
+		String ret = bookservice.save(entity);
+		return Msg.success().add("ret", ret);
+	}
+
+
+
+
+
+
+-->

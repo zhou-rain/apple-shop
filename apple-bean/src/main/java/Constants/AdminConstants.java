@@ -17,7 +17,7 @@ public class AdminConstants {
 	//用户状态  -1:不存在  0:禁用  1:启用
 	public static final short STATUE_ADMIN_NOTEXIST = -1;
 	public static final short STATUE_ADMIN_INUSE = 1;
-	public static final short STATUE_ADMIN_FORBIDDEN = 0;
+	public static final short STATUE_ADMIN_DISABLE	 = 0;
 
 
 

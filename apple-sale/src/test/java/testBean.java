@@ -1,9 +1,7 @@
 import com.qmall.apple.Entity.ShopGoodsTypeEntity;
 import com.qmall.apple.bean.ShopGoodsType;
-import com.qmall.apple.commons.DateTimeUtil;
-import com.qmall.apple.commons.DateUtil;
+import com.qmall.apple.utils.DateTimeUtil;
 import com.qmall.apple.sale.util.TransformBean;
-import org.apache.tools.ant.taskdefs.Sleep;
 import org.junit.Test;
 
 import java.text.ParseException;

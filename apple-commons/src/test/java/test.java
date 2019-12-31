@@ -1,5 +1,5 @@
-import com.qmall.apple.commons.DateTimeUtil;
-import com.qmall.apple.commons.WebUtil;
+import com.qmall.apple.utils.DateTimeUtil;
+import com.qmall.apple.utils.WebUtil;
 import org.junit.Test;
 
 import java.time.LocalDate;

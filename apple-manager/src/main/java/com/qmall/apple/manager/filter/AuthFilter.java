@@ -1,13 +1,12 @@
 package com.qmall.apple.manager.filter;
 
 import Constants.AdminConstants;
-import com.qmall.apple.commons.Validator;
+import com.qmall.apple.utils.Validator;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author: zhouR

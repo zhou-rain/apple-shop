@@ -3,7 +3,7 @@ package com.qmall.apple.sale.controller;
 import com.qmall.apple.bean.ShopCart;
 import com.qmall.apple.bean.ShopGoods;
 import com.qmall.apple.commons.Msg;
-import com.qmall.apple.commons.WebUtil;
+import com.qmall.apple.utils.WebUtil;
 import com.qmall.apple.sale.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

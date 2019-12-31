@@ -16,6 +16,7 @@
         <module>apple-mapper</module>
         <module>apple-manager</module>
         <module>apple-sale</module>
+        <module>shiro-test</module>
     </modules>
 
 

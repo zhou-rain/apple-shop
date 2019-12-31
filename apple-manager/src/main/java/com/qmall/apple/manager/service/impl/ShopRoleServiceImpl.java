@@ -1,14 +1,12 @@
 package com.qmall.apple.manager.service.impl;
 
-import Constants.AdminConstants;
 import com.github.pagehelper.PageHelper;
 import com.qmall.apple.Entity.ShopRoleEntity;
 import com.qmall.apple.bean.*;
-import com.qmall.apple.commons.ArrayUtil;
-import com.qmall.apple.commons.Validator;
-import com.qmall.apple.commons.WebUtil;
+import com.qmall.apple.utils.ArrayUtil;
+import com.qmall.apple.utils.Validator;
+import com.qmall.apple.utils.WebUtil;
 import com.qmall.apple.dao.ShopAdminRoleMapper;
-import com.qmall.apple.dao.ShopAuthMapper;
 import com.qmall.apple.dao.ShopRoleAuthMapper;
 import com.qmall.apple.dao.ShopRoleMapper;
 import com.qmall.apple.manager.service.ShopRoleService;
